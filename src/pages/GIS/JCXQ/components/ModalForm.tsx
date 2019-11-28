@@ -4,7 +4,7 @@ import { FormComponentProps } from 'antd/es/form';
 import { TableListItem1 } from '@/pages/GIS/JCXQ/data';
 
 export interface FormValsType extends Partial<TableListItem1> {
- cztime?: string;
+  cztime?: string;
 }
 
 export interface ModalFormProps extends FormComponentProps {
@@ -15,20 +15,22 @@ export interface ModalFormProps extends FormComponentProps {
 }
 
 class ModalForm extends React.Component {
-  constructor(props:ModalFormProps) {
-    super(props)
-    this.state = {
-    }
+  constructor(props: ModalFormProps) {
+    super(props);
+    this.state = {};
   }
 
   render() {
-    const { onChange, value } = this.props;// 有默认传来的 chang事件，和 value值
+    const {onChange, value} = this.props; // 有默认传来的 chang事件，和 value值
     const { getFieldProps, name } = this.props;
     return (
-      <Modal title="设置" visible={this.state.modalVisible} footer={null} >
+      <Modal title="设置" visible={this.state.modalVisible} footer={null}>
         <Form onSubmit={() => this.handleSubmit()}>
           <Form.Item>
-            <InputNumber name="value" defaultValue={record.value}/><Button htmlType="submit" type="primary">修改</Button>
+            <InputNumber name="value" defaultValue={record.value}/>
+            <Button htmlType="submit" type="primary">
+              修改
+            </Button>
           </Form.Item>
           <Form.Item>
             <Input name="code" value={record.code} type="hidden"/>

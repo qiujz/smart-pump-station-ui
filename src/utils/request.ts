@@ -4,7 +4,7 @@
  */
 import { extend } from 'umi-request';
 import { notification } from 'antd';
-import request1 from "@/utils/request1";
+import request1 from '@/utils/request1';
 
 const codeMessage = {
   200: '服务器成功返回请求的数据。',
@@ -58,7 +58,5 @@ const request = extend({
 //   response.headers.set('Access-Control-Allow-Origin', '*');
 //   return response;
 // });
-
-
 
 export default request;

@@ -1,6 +1,6 @@
 import { AnyAction, Reducer } from 'redux';
 import { EffectsCommandMap } from 'dva';
-import { addRule, queryRule, removeRule, updateRule,allOperateLog } from './service';
+import {addRule, queryRule, removeRule, updateRule, allOperateLog} from './service';
 
 import { TableListData } from './data.d';
 
@@ -21,7 +21,7 @@ export interface ModelType {
     add: Effect;
     remove: Effect;
     update: Effect;
-    allOperateLog:Effect;
+    allOperateLog: Effect;
   };
   reducers: {
     save: Reducer<StateType>;

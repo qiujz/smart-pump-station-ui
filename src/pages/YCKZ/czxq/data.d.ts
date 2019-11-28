@@ -4,7 +4,7 @@ export interface TableListItem {
   user: string;
   operation: string;
   desc: string;
-  result:string;
+  result: string;
   date: Date;
 }
 

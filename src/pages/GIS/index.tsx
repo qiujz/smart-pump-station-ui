@@ -12,11 +12,10 @@ export default () => {
   }, []);
 
   return (
-    <PageHeaderWrapper  className={styles.main}>
+    <PageHeaderWrapper className={styles.main}>
       <div style={{ paddingTop: 1, textAlign: 'center' }}>
         <Spin spinning={loading} size="large"></Spin>
       </div>
-
     </PageHeaderWrapper>
   );
 };

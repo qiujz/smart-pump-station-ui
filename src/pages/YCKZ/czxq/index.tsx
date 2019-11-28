@@ -84,7 +84,7 @@ class TableList extends Component<TableListProps, TableListState> {
     stepFormValues: {},
   };
 
-   columns: StandardTableColumnProps[] = [
+  columns: StandardTableColumnProps[] = [
     {
       title: '时间',
       dataIndex: 'date',
@@ -103,9 +103,7 @@ class TableList extends Component<TableListProps, TableListState> {
       title: '执行结果',
       dataIndex: 'result',
     },
-
   ];
-
 
   columns1: StandardTableColumnProps[] = [
     {

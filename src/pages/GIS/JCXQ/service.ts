@@ -7,11 +7,13 @@ export async function queryRule(params: TableListParams) {
     params,
   });
 }
+
 export async function LatestAll(params: TableListParams) {
   return request(`${Constants.baseUrl}/log/LatestAll`, {
     params,
   });
 }
+
 export async function removeRule(params: TableListParams) {
   return request('/api/rule', {
     method: 'POST',

@@ -7,7 +7,7 @@ import { TableListItem } from '../data.d';
 
 export interface FormValsType extends Partial<TableListItem> {
   code?: string;
-  value?:string;
+  value?: string;
 }
 
 export interface UpdateFormProps extends FormComponentProps {
@@ -15,8 +15,8 @@ export interface UpdateFormProps extends FormComponentProps {
   handleUpdate: (values: FormValsType) => void;
   updateModalVisible: boolean;
   values: Partial<TableListItem>;
-
 }
+
 const FormItem = Form.Item;
 // const { Step } = Steps;
 const { TextArea } = Input;
@@ -26,7 +26,6 @@ const RadioGroup = Radio.Group;
 export interface UpdateFormState {
   formVals: FormValsType;
   currentStep: number;
-
 }
 
 class UpdateForm extends Component<UpdateFormProps, UpdateFormState> {
@@ -51,26 +50,25 @@ class UpdateForm extends Component<UpdateFormProps, UpdateFormState> {
         key: props.values.key,
       },
       currentStep: 0,
-
     };
   }
 
-handleSubmit=() => {
-  const { form, handleUpdate } = this.props;
-  const { formVals: oldValue } = this.state;
-  form.validateFields((err, fieldsValue) => {
-    if (err) return;
-    const formVals = { ...oldValue, ...fieldsValue };
-    this.setState(
-      {
-        formVals,
-      },
-      () => {
+  handleSubmit = () => {
+    const {form, handleUpdate} = this.props;
+    const {formVals: oldValue} = this.state;
+    form.validateFields((err, fieldsValue) => {
+      if (err) return;
+      const formVals = {...oldValue, ...fieldsValue};
+      this.setState(
+        {
+          formVals,
+        },
+        () => {
           handleUpdate(formVals);
-      },
-    );
-  });
-}
+        },
+      );
+    });
+  };
 
   handleNext = (currentStep: number) => {
     const { form, handleUpdate } = this.props;
@@ -223,7 +221,6 @@ handleSubmit=() => {
     ];
   };
 
-
   render() {
     const { updateModalVisible, handleUpdateModalVisible, values } = this.props;
     const { currentStep, formVals } = this.state;
@@ -243,17 +240,18 @@ handleSubmit=() => {
           <Form.Item key="value" {...this.formLayout} label="数值">
             {form.getFieldDecorator('value', {
               initialValue: formVals.value,
-            })(
-            <Input name="value" defaultValue={formVals.value} />)}
+            })(<Input name="value" defaultValue={formVals.value}/>)}
 
-            <Button htmlType="submit" type="primary">修改</Button>
+            <Button htmlType="submit" type="primary">
+              修改
+            </Button>
           </Form.Item>
           <Form.Item key="code" {...this.formLayout}>
-            {form.getFieldDecorator('code', { initialValue: formVals.code })(<Input name="code" value={values.code} type="hidden"/>)
-            }
+            {form.getFieldDecorator('code', {initialValue: formVals.code})(
+              <Input name="code" value={values.code} type="hidden"/>,
+            )}
           </Form.Item>
         </Form>
-
       </Modal>
     );
   }

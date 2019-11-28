@@ -16,8 +16,6 @@ export default () => {
       <div style={{ paddingTop: 100, textAlign: 'center' }}>
         <Spin spinning={loading} size="large"></Spin>
       </div>
-
-
     </PageHeaderWrapper>
   );
 };

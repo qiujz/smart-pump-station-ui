@@ -19,11 +19,16 @@ export default () => {
       <div>
         <Card
           hoverable
-
-          cover={<img alt="example" src="http://47.100.2.229/D02451881/2019_11_14-2019_11_14/172.16.10.6_01_20191114160348831_MOTION_DETECTION.jpg" />}
+          cover={
+            <img
+              alt="example"
+              src="http://47.100.2.229/D02451881/2019_11_14-2019_11_14/172.16.10.6_01_20191114160348831_MOTION_DETECTION.jpg"
+            />
+          }
         >
           <Meta title="最新图片" description="最新图片" />
-        </Card>,
+        </Card>
+        ,
       </div>
     </PageHeaderWrapper>
   );
