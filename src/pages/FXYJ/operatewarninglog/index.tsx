@@ -45,7 +45,7 @@ const status = ['关闭', '运行中', '已上线', '异常'];
 interface TableListProps extends FormComponentProps {
   dispatch: Dispatch<any>;
   loading: boolean;
-  listTableListLog: StateType;
+  listTableListOperateWarningLog: StateType;
 }
 
 interface TableListState {
@@ -60,17 +60,17 @@ interface TableListState {
 /* eslint react/no-multi-comp:0 */
 @connect(
   ({
-    listTableListLog,
+    listTableListOperateWarningLog,
     loading,
   }: {
-    listTableListLog: StateType;
+    listTableListOperateWarningLog: StateType;
     loading: {
       models: {
         [key: string]: boolean;
       };
     };
   }) => ({
-    listTableListLog,
+    listTableListOperateWarningLog,
     loading: loading.models.rule,
   }),
 )
@@ -84,7 +84,7 @@ class TableList extends Component<TableListProps, TableListState> {
     stepFormValues: {},
   };
 
-  columns: StandardTableColumnProps[] = [
+  columns1: StandardTableColumnProps[] = [
     {
       title: '规则名称',
       dataIndex: 'name',
@@ -144,66 +144,30 @@ class TableList extends Component<TableListProps, TableListState> {
       ),
     },
   ];
-
-  columns1: StandardTableColumnProps[] = [
+  columns: StandardTableColumnProps[] = [
     {
-      title: '泵站名',
-      dataIndex: 'pumpName',
+      title: '等级',
+      dataIndex: 'grade',
     },
     {
-      title: '安装地点',
-      dataIndex: 'place',
-    },
-    {
-      title: '设备名称',
+      title: '告警名称',
       dataIndex: 'name',
     },
     {
-      title: '信号描述',
-      dataIndex: 'description',
+      title: '告警对象',
+      dataIndex: 'target',
     },
     {
-      key: 'value',
-      title: '数值',
-      dataIndex: 'value',
+      title: '最近发生时间',
+      dataIndex: 'warningDate',
     },
     {
-      title: '时间',
-      dataIndex: 'date',
-      width: 190,
-    },
-    {
-      title: '信号类型',
-      dataIndex: 'type',
-      width: 1,
-      ellipsis: true,
-    },
-    {
-      title: '备注',
-
-      dataIndex: 'comments',
-      width: '150px',
+      title: '告警次数',
+      dataIndex: 'count',
     },
     {
       title: '操作',
-      render: (text: any, record: any, index: number) => {
-        if (index === 3) {
-          return (
-            <Fragment>
-              <Button type="primary" onClick={() => this.handleUpdateModalVisible(true, record)}>
-                设置
-              </Button>
-            </Fragment>
-          );
-        }
-        return null;
-      },
-    },
-    {
-      title: 'code',
-      width: 1,
-      dataIndex: 'code',
-      ellipsis: true,
+      dataIndex: 'operation',
     },
   ];
 
@@ -211,7 +175,7 @@ class TableList extends Component<TableListProps, TableListState> {
     const { dispatch } = this.props;
     setInterval(() => {
       dispatch({
-        type: 'listTableListLog/LatestAll',
+        type: 'listTableListOperateWarningLog/fetch',
       });
     }, 1000);
   }
@@ -348,10 +312,11 @@ class TableList extends Component<TableListProps, TableListState> {
   handleUpdate = (fields: FormValsType) => {
     const { dispatch } = this.props;
     dispatch({
-      type: 'listTableList/setValue',
+      type: 'listTableList/update',
       payload: {
-        code: fields.code,
-        value: fields.value,
+        name: fields.name,
+        desc: fields.desc,
+        key: fields.key,
       },
     });
 
@@ -479,7 +444,7 @@ class TableList extends Component<TableListProps, TableListState> {
 
   render() {
     const {
-      listTableListLog: { data },
+      listTableListOperateWarningLog: { data },
       loading,
     } = this.props;
 
@@ -503,27 +468,27 @@ class TableList extends Component<TableListProps, TableListState> {
       <PageHeaderWrapper>
         <Card bordered={false}>
           <div className={styles.tableList}>
-            {/*<div className={styles.tableListForm}>{this.renderForm()}</div>*/}
-            {/*<div className={styles.tableListOperator}>*/}
-            {/*  <Button icon="plus" type="primary" onClick={() => this.handleModalVisible(true)}>*/}
-            {/*    新建*/}
-            {/*  </Button>*/}
-            {/*  {selectedRows.length > 0 && (*/}
-            {/*    <span>*/}
-            {/*      <Button>批量操作</Button>*/}
-            {/*      <Dropdown overlay={menu}>*/}
-            {/*        <Button>*/}
-            {/*          更多操作 <Icon type="down" />*/}
-            {/*        </Button>*/}
-            {/*      </Dropdown>*/}
-            {/*    </span>*/}
-            {/*  )}*/}
-            {/*</div>*/}
+            <div className={styles.tableListForm}>{this.renderForm()}</div>
+            <div className={styles.tableListOperator}>
+              <Button icon="plus" type="primary" onClick={() => this.handleModalVisible(true)}>
+                新建
+              </Button>
+              {selectedRows.length > 0 && (
+                <span>
+                  <Button>批量操作</Button>
+                  <Dropdown overlay={menu}>
+                    <Button>
+                      更多操作 <Icon type="down" />
+                    </Button>
+                  </Dropdown>
+                </span>
+              )}
+            </div>
             <StandardTable
               selectedRows={selectedRows}
               loading={loading}
               data={data}
-              columns={this.columns1}
+              columns={this.columns}
               onSelectRow={this.handleSelectRows}
               onChange={this.handleStandardTableChange}
             />

@@ -16,16 +16,16 @@
 export interface TableListItem {
   key: number;
   disabled?: boolean;
-  place:string;
-  name:string;
-  description:string;
+  place: string;
+  name: string;
+  pumpName: string;
+  description: string;
   desc: string;
-  value:string;
-  data:Date;
-  type:string;
-  comments:string;
-  code:string;
-
+  value: string;
+  date: Date;
+  type: string;
+  comments: string;
+  code: string;
 }
 
 export interface TableListPagination {

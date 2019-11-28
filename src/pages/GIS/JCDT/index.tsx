@@ -1,5 +1,4 @@
 import React from 'react';
-// @ts-ignore
 import {
   Map,
   Polygon,
@@ -11,9 +10,8 @@ import {
   Marker,
   Label,
 } from 'rc-bmap';
-import { Button } from 'antd';
-import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import styles from './index.less';
+import { PageHeaderWrapper } from '@ant-design/pro-layout';
 
 const { Content } = Label;
 const { Point, Path, Size } = Base;
@@ -66,24 +64,31 @@ class Example extends React.Component {
     const { editing } = this.state;
 
     return (
-      <PageHeaderWrapper className={styles.main}>
-        <div style={{ height: '100vh' }}>
-          <Map ak="R6nej5fILtmiQ2BUh6EfRmy3" zoom={17} scrollWheelZoom autoResize>
-            <Point name="center" lng="120.090101" lat="31.655085" />
+      <PageHeaderWrapper>
+        <div className={styles.main}>
+          <Map
+            ak="R6nej5fILtmiQ2BUh6EfRmy3"
+            zoom={19}
+            scrollWheelZoom
+            autoResize
+            mapType={MAP_TYPE.SATELLITE}
+          >
+            <Point name="center" lng="120.0918750000" lat="31.6560620000" />
 
-            <Polyline strokeColor="blue" strokeWeight={20} strokeOpacity={0.8} editing={editing}>
-              <Path>
-                {polylinePoints.map(item => (
-                  <Point lng={item.lng} lat={item.lat} />
-                ))}
-              </Path>
-            </Polyline>
+            {/*<Polyline strokeColor="#B3D8FF" strokeWeight={20} strokeOpacity={0.8} editing={editing}>*/}
+            {/*  <Path>*/}
+            {/*    {polylinePoints.map(item => (*/}
+            {/*      <Point lng={item.lng} lat={item.lat} />*/}
+            {/*    ))}*/}
+            {/*  </Path>*/}
+            {/*</Polyline>*/}
             <Polygon
               strokeColor="black"
-              strokeWeight={10}
+              strokeWeight={5}
               strokeOpacity={0.8}
               editing={editing}
               fillColor={0}
+              strokeStyle={'dashed'}
             >
               <Path>
                 {polygonPoints.map(item => (
@@ -91,75 +96,77 @@ class Example extends React.Component {
                 ))}
               </Path>
             </Polygon>
-            <MapType
-              anchor={CONTROL_ANCHOR.TOP_LEFT}
-              mapTypes={[MAP_TYPE.HYBRID, MAP_TYPE.NORMAL]}
-            />
+            <MapType mapTypes={[MAP_TYPE.NORMAL, MAP_TYPE.SATELLITE]} />
 
-            <OverviewMap anchor={CONTROL_ANCHOR.BOTTOM_RIGHT} isOpen />
-
-            <Marker animation={ANIMATION.BOUNCE}>
-              <Point lng="120.089743" lat=" 31.65524" />
+            <Marker>
+              <Point lng="120.0892470000" lat=" 31.6554480000" />
               <Label>
                 <Size name="offset" width="20" height="-5" />
-                <Content>1</Content>
+                <Content>镇北排涝站</Content>
               </Label>
             </Marker>
-            <Marker animation={ANIMATION.BOUNCE}>
-              <Point lng="120.090201" lat=" 31.655209" />
+            <Marker>
+              <Point lng="120.0892470000" lat=" 31.6550670000" />
               <Label>
-                <Size name="offset" width="20" height="-5" />
-                <Content>2</Content>
+                <Size name="offset" width="10" height="20" />
+                <Content>截留泵站-泵站内</Content>
               </Label>
             </Marker>
-            <Marker animation={ANIMATION.BOUNCE}>
-              <Point lng="120.090857" lat="  31.655209" />
+            <Marker>
+              <Point lng="120.0900870000" lat="  31.6551250000" />
               <Label>
                 <Size name="offset" width="20" height="-5" />
-                <Content>3</Content>
+                <Content>截留泵站-河岸边</Content>
               </Label>
             </Marker>
-            <Marker animation={ANIMATION.BOUNCE}>
-              <Point lng="120.092366" lat="  31.655286" />
+            <Marker>
+              <Point lng="120.0895650000" lat=" 31.6551250000" />
               <Label>
                 <Size name="offset" width="20" height="-5" />
-                <Content>4</Content>
+                <Content>截留泵站-西闸</Content>
               </Label>
             </Marker>
-            <Marker animation={ANIMATION.BOUNCE}>
-              <Point lng="120.093165" lat=" 31.654641" />
+            <Marker>
+              <Point lng="120.0919820000" lat=" 31.6549180000" />
               <Label>
                 <Size name="offset" width="20" height="-5" />
-                <Content>5</Content>
+                <Content>截留泵站-东闸</Content>
               </Label>
             </Marker>
-            <Marker animation={ANIMATION.BOUNCE}>
-              <Point lng="120.09295" lat="  31.65695" />
+            <Marker>
+              <Point lng="120.0890400000" lat="31.6556820000" />
               <Label>
-                <Size name="offset" width="20" height="-5" />
-                <Content>6</Content>
+                <Size name="offset" width="0" height="-25" />
+                <Content>循环水泵站-人工湿地旁</Content>
               </Label>
             </Marker>
-            <Marker animation={ANIMATION.BOUNCE}>
-              <Point lng="120.094028" lat=" 31.656911" />
+            <Marker>
+              <Point lng="120.0947660000" lat="31.6557090000" />
               <Label>
                 <Size name="offset" width="20" height="-5" />
-                <Content>7</Content>
+                <Content>循环水泵站-泵站内</Content>
               </Label>
             </Marker>
 
-            <Marker animation={ANIMATION.BOUNCE}>
-              <Point lng="120.089142" lat="31.657075" />
+            <Marker>
+              <Point lng="120.0947980000" lat="31.6558210000" />
               <Label>
-                <Size name="offset" width="0" height="60" />
-                <Content>
-                  武 <br />进 <br />港<br />
-                </Content>
+                <Size name="offset" width="20" height="-5" />
+                <Content>循环水泵站-河岸取水口</Content>
               </Label>
             </Marker>
+
+            <Marker>
+              <Point lng="120.0895290000" lat="31.6556590000" />
+              <Label>
+                <Size name="offset" width="20" height="-5" />
+                <Content>洛阳二号泵站</Content>
+              </Label>
+            </Marker>
+
             <Label>
               <Point name="position" lng="120.089475" lat="31.655373" />
-              <Size name="offset" width="100" height="10" />
+              <Size name="offset" width="550" height="10" />
               <Content>徐家头浜</Content>
             </Label>
             <Label>
@@ -180,8 +187,8 @@ class Example extends React.Component {
               <Content>洛阳中学</Content>
             </Label>
           </Map>
-          <Button onClick={this.handleEnable}>开启线、面编辑功能</Button>
-          <Button onClick={this.handleDisable}>关闭线、面编辑功能</Button>
+          {/*<Button onClick={this.handleEnable}>开启线、面编辑功能</Button>*/}
+          {/*<Button onClick={this.handleDisable}>关闭线、面编辑功能</Button>*/}
         </div>
       </PageHeaderWrapper>
     );

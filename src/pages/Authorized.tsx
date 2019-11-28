@@ -1,9 +1,9 @@
 import React from 'react';
 import Redirect from 'umi/redirect';
-import {connect} from 'dva';
+import { connect } from 'dva';
 import pathToRegexp from 'path-to-regexp';
 import Authorized from '@/utils/Authorized';
-import {ConnectProps, ConnectState, Route, UserModelState} from '@/models/connect';
+import { ConnectProps, ConnectState, Route, UserModelState } from '@/models/connect';
 
 interface AuthComponentProps extends ConnectProps {
   user: UserModelState;
@@ -31,31 +31,31 @@ const getRouteAuthority = (path: string, routeData: Route[]) => {
 };
 
 const AuthComponent: React.FC<AuthComponentProps> = ({
-                                                       children,
-                                                       route = {
-                                                         routes: [],
-                                                       },
-                                                       location = {
-                                                         pathname: '',
-                                                       },
-                                                       user,
-                                                     }) => {
-  const {currentUser} = user;
-  const {routes = []} = route;
+  children,
+  route = {
+    routes: [],
+  },
+  location = {
+    pathname: '',
+  },
+  user,
+}) => {
+  const { currentUser } = user;
+  const { routes = [] } = route;
   const isLogin = currentUser && currentUser.name;
   return (
     <Authorized
-       authority={getRouteAuthority(location.pathname, routes) || ''}
-       //noMatch={isLogin ? <Redirect to="/exception/403"/> : <Redirect to="/user/login"/>}
-       noMatch={isLogin ? <Redirect to="/welcome"/> : <Redirect to="/welcome"/>}
+      authority={getRouteAuthority(location.pathname, routes) || ''}
+      //noMatch={isLogin ? <Redirect to="/exception/403"/> : <Redirect to="/user/login"/>}
+      noMatch={isLogin ? <Redirect to="/welcome" /> : <Redirect to="/user/login" />}
       //currentAuthority={currentAuthority}
-     // noMatch={<Redirect to="/welcome" />}
+      // noMatch={<Redirect to="/welcome" />}
     >
       {children}
     </Authorized>
   );
 };
 
-export default connect(({user}: ConnectState) => ({
+export default connect(({ user }: ConnectState) => ({
   user,
 }))(AuthComponent);

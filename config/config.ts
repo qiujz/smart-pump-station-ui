@@ -91,7 +91,7 @@ export default {
     },
     {
       path: '/',
-    //  component: '../layouts/SecurityLayout',
+      //  component: '../layouts/SecurityLayout',
       routes: [
         {
           path: '/',
@@ -108,7 +108,7 @@ export default {
               name: 'welcome',
               icon: 'smile',
               component: './Welcome',
-            //  authority: ['admin'],
+              //  authority: ['admin'],
             },
             // {
             //   path: '/admin',
@@ -122,14 +122,14 @@ export default {
               icon: 'smile',
               path: '/dpzb',
               component: './DPZB',
-            //  authority: ['admin'],
+              //  authority: ['admin'],
             },
             {
               name: 'GIS监测',
               icon: 'smile',
               path: '/gis',
               //component: './GIS',
-           //   authority: ['admin'],
+              //   authority: ['admin'],
               routes: [
                 {
                   name: '监测地图',
@@ -150,7 +150,7 @@ export default {
               icon: 'smile',
               path: '/yckz',
               //component: './YCKZ',
-          //    authority: ['admin'],
+              //    authority: ['admin'],
               routes: [
                 {
                   name: '操作详情',
@@ -165,13 +165,19 @@ export default {
               icon: 'smile',
               path: '/fxyj',
               //component: './FXYJ',
-            //  authority: ['admin'],
+              //  authority: ['admin'],
               routes: [
                 {
-                  name: '告警处理',
+                  name: '待处理警告',
                   icon: 'smile',
-                  path: '/fxyj/warning',
-                  component: './FXYJ/waring',
+                  path: '/fxyj/pendingwarning',
+                  component: './FXYJ/pendingwarning',
+                },
+                {
+                  name: '告警处理记录',
+                  icon: 'smile',
+                  path: '/fxyj/operatewarninglog',
+                  component: './FXYJ/operatewarninglog',
                 },
               ],
             },
@@ -180,7 +186,7 @@ export default {
               icon: 'smile',
               path: '/jkzp',
               // component: './JKZP',
-             // authority: ['admin'],
+              // authority: ['admin'],
               routes: [
                 {
                   name: '监控模式',
@@ -201,7 +207,7 @@ export default {
               icon: 'smile',
               path: '/jcfx',
               component: './JCFX',
-             // authority: ['admin'],
+              // authority: ['admin'],
             },
             {
               component: './404',
@@ -237,7 +243,7 @@ export default {
         resourcePath: string;
       },
       _: string,
-      localName: string
+      localName: string,
     ) => {
       if (
         context.resourcePath.includes('node_modules') ||
