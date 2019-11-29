@@ -12,9 +12,10 @@ import {
 } from 'rc-bmap';
 import styles from './index.less';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
+import {Drawer} from "antd";
 
 const { Content } = Label;
-const { Point, Path, Size } = Base;
+const {Point, Path, Size, Events} = Base;
 const { CONTROL_ANCHOR, MAP_TYPE, ANIMATION } = Constants;
 
 const polylinePoints = [
@@ -45,23 +46,66 @@ const polygonPoints = [
 
 class Example extends React.Component {
   state = {
-    editing: false,
+
+    drawerVisible: false,
+    drawerTitle: {},
+    drawerContent: {},
   };
 
-  handleEnable = () => {
+  showDrawer = (content: string) => {
+    switch (content) {
+      case "镇北排涝站":
+        this.state.drawerTitle = "镇北排涝站";
+        this.state.drawerContent = "分割内外河水位。暂未接入平台";
+        break;
+      case "截留泵站-泵站内":
+        this.state.drawerTitle = "截留泵站-泵站内";
+        this.state.drawerContent = "设备面板+2个监控面板，设备面板显示两个泵的运行状态";
+        break;
+      case "镇北排涝站":
+        this.state.drawerTitle = "截留泵站-河岸边";
+        this.state.drawerContent = "监控面板";
+        break;
+      case "截留泵站-西闸":
+        this.state.drawerTitle = "截留泵站-西闸";
+        this.state.drawerContent = "设备面板+监控面板，设备面板显示闸门的开关状态（通过启闭机的开关信号确定）";
+        break;
+      case "截留泵站-东闸":
+        this.state.drawerTitle = "截留泵站-东闸";
+        this.state.drawerContent = "设备面板+监控面板，设备面板显示闸门的开关状态（通过启闭机的开关信号确定）";
+        break;
+      case "循环水泵站-人工湿地旁":
+        this.state.drawerTitle = "循环水泵站-人工湿地旁";
+        this.state.drawerContent = "监控面板";
+        break;
+      case "循环水泵站-泵站内":
+        this.state.drawerTitle = "循环水泵站-泵站内";
+        this.state.drawerContent = "设备面板+监控面板，设备面板显示两个泵的运行状态";
+        break;
+      case "循环水泵站-河岸取水口":
+        this.state.drawerTitle = "循环水泵站-河岸取水口";
+        this.state.drawerContent = "监控面板";
+        break;
+      case "洛阳二号泵站":
+        this.state.drawerTitle = "洛阳二号泵站";
+        this.state.drawerContent = "提升泵站。暂未接入平台";
+        break;
+
+    }
     this.setState({
-      editing: true,
+      drawerVisible: true,
     });
   };
 
-  handleDisable = () => {
+  onClose = () => {
     this.setState({
-      editing: false,
+      drawerVisible: false,
     });
   };
+
 
   render() {
-    const { editing } = this.state;
+
 
     return (
       <PageHeaderWrapper>
@@ -86,7 +130,7 @@ class Example extends React.Component {
               strokeColor="black"
               strokeWeight={5}
               strokeOpacity={0.8}
-              editing={editing}
+              editing={false}
               fillColor={0}
               strokeStyle={'dashed'}
             >
@@ -104,6 +148,7 @@ class Example extends React.Component {
                 <Size name="offset" width="20" height="-5" />
                 <Content>镇北排涝站</Content>
               </Label>
+              <Events click={() => this.showDrawer("镇北排涝站")}/>
             </Marker>
             <Marker>
               <Point lng="120.0892470000" lat=" 31.6550670000" />
@@ -111,6 +156,7 @@ class Example extends React.Component {
                 <Size name="offset" width="10" height="20" />
                 <Content>截留泵站-泵站内</Content>
               </Label>
+              <Events click={() => this.showDrawer("截留泵站-泵站内")}/>
             </Marker>
             <Marker>
               <Point lng="120.0900870000" lat="  31.6551250000" />
@@ -118,6 +164,7 @@ class Example extends React.Component {
                 <Size name="offset" width="20" height="-5" />
                 <Content>截留泵站-河岸边</Content>
               </Label>
+              <Events click={() => this.showDrawer("截留泵站-河岸边")}/>
             </Marker>
             <Marker>
               <Point lng="120.0895650000" lat=" 31.6551250000" />
@@ -125,6 +172,7 @@ class Example extends React.Component {
                 <Size name="offset" width="20" height="-5" />
                 <Content>截留泵站-西闸</Content>
               </Label>
+              <Events click={() => this.showDrawer("截留泵站-西闸")}/>
             </Marker>
             <Marker>
               <Point lng="120.0919820000" lat=" 31.6549180000" />
@@ -132,6 +180,7 @@ class Example extends React.Component {
                 <Size name="offset" width="20" height="-5" />
                 <Content>截留泵站-东闸</Content>
               </Label>
+              <Events click={() => this.showDrawer("截留泵站-东闸")}/>
             </Marker>
             <Marker>
               <Point lng="120.0890400000" lat="31.6556820000" />
@@ -139,6 +188,7 @@ class Example extends React.Component {
                 <Size name="offset" width="0" height="-25" />
                 <Content>循环水泵站-人工湿地旁</Content>
               </Label>
+              <Events click={() => this.showDrawer("循环水泵站-人工湿地旁")}/>
             </Marker>
             <Marker>
               <Point lng="120.0947660000" lat="31.6557090000" />
@@ -146,23 +196,38 @@ class Example extends React.Component {
                 <Size name="offset" width="20" height="-5" />
                 <Content>循环水泵站-泵站内</Content>
               </Label>
+              <Events click={() => this.showDrawer("循环水泵站-泵站内")}/>
             </Marker>
 
             <Marker>
               <Point lng="120.0947980000" lat="31.6558210000" />
               <Label>
-                <Size name="offset" width="20" height="-5" />
+                <Size name="offset" width="20" height="-10"/>
                 <Content>循环水泵站-河岸取水口</Content>
+                <Events click={() => this.showDrawer("循环水泵站-河岸取水口")}/>
               </Label>
             </Marker>
 
             <Marker>
               <Point lng="120.0895290000" lat="31.6556590000" />
               <Label>
-                <Size name="offset" width="20" height="-5" />
+                <Size name="offset" width="20" height="0"/>
                 <Content>洛阳二号泵站</Content>
               </Label>
+              <Events click={() => this.showDrawer("洛阳二号泵站")}/>
             </Marker>
+
+            <Drawer
+              title={this.state.drawerTitle}
+              placement="top"
+              closable={false}
+              onClose={this.onClose}
+              visible={this.state.drawerVisible}
+
+            >
+              <p>{this.state.drawerContent}</p>
+
+            </Drawer>
 
             <Label>
               <Point name="position" lng="120.089475" lat="31.655373" />
