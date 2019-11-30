@@ -4,7 +4,6 @@
  */
 import { extend } from 'umi-request';
 import { notification } from 'antd';
-import request1 from '@/utils/request1';
 
 const codeMessage = {
   200: '服务器成功返回请求的数据。',
@@ -27,36 +26,31 @@ const codeMessage = {
 /**
  * 异常处理程序
  */
-// const errorHandler = (error: { response: Response }): Response => {
-//   const { response } = error;
-//   if (response && response.status) {
-//     const errorText = codeMessage[response.status] || response.statusText;
-//     const { status, url } = response;
-//
-//     notification.error({
-//       message: `请求错误 ${status}: ${url}`,
-//       description: errorText,
-//     });
-//   } else if (!response) {
-//     notification.error({
-//       description: '您的网络发生异常，无法连接服务器',
-//       message: '网络异常',
-//     });
-//   }
-//   return response;
-// };
+const errorHandler = (error: { response: Response }): Response => {
+  const {response} = error;
+  if (response && response.status) {
+    const errorText = codeMessage[response.status] || response.statusText;
+    const {status, url} = response;
+
+    notification.error({
+      message: `请求错误 ${status}: ${url}`,
+      description: errorText,
+    });
+  } else if (!response) {
+    notification.error({
+      description: '您的网络发生异常，无法连接服务器',
+      message: '网络异常',
+    });
+  }
+  return response;
+};
 
 /**
  * 配置request请求时的默认参数
  */
 const request = extend({
-  //errorHandler, // 默认错误处理
-
-  credentials: 'omit', // 默认请求是否带上cookie
+  errorHandler, // 默认错误处理
+  credentials: 'same-origin', // 默认请求是否带上cookie
 });
-// request.interceptors.response.use((response, options) => {
-//   response.headers.set('Access-Control-Allow-Origin', '*');
-//   return response;
-// });
 
 export default request;

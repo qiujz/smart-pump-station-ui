@@ -22,7 +22,6 @@ export interface NoticeIconTabProps {
   list: NoticeIconData[];
   onViewMore?: (e: any) => void;
 }
-
 const NoticeList: React.SFC<NoticeIconTabProps> = ({
                                                      data = [],
                                                      onClick,

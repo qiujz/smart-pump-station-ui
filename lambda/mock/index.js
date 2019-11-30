@@ -2509,7 +2509,6 @@
       id: '820000',
     },
   ];
-
   function getProvince(req, res) {
     return res.json(province);
   }
@@ -2828,7 +2827,6 @@
   var baseMinusTMin = base - tMin;
   var floor = Math.floor;
   var stringFromCharCode = String.fromCharCode;
-
   /*--------------------------------------------------------------------------*/
 
   /**
@@ -2841,7 +2839,6 @@
   function error(type) {
     throw new RangeError(errors[type]);
   }
-
   /**
    * A generic `Array#map` utility function.
    * @private
@@ -2861,7 +2858,6 @@
 
     return result;
   }
-
   /**
    * A simple `Array#map`-like wrapper to work with domain name strings or email
    * addresses.
@@ -2889,7 +2885,6 @@
     var encoded = map(labels, fn).join('.');
     return result + encoded;
   }
-
   /**
    * Creates an array containing the numeric code points of each Unicode
    * character in the string. While JavaScript uses UCS-2 internally,
@@ -2934,7 +2929,6 @@
 
     return output;
   }
-
   /**
    * Converts a digit/integer into a basic code point.
    * @see `basicToDigit()`
@@ -2952,7 +2946,6 @@
     // 26..35 map to ASCII 0..9
     return digit + 22 + 75 * (digit < 26) - ((flag != 0) << 5);
   }
-
   /**
    * Bias adaptation function as per section 3.4 of RFC 3492.
    * https://tools.ietf.org/html/rfc3492#section-3.4
@@ -2975,7 +2968,6 @@
 
     return floor(k + ((baseMinusTMin + 1) * delta) / (delta + skew));
   }
-
   /**
    * Converts a string of Unicode symbols (e.g. a domain name label) to a
    * Punycode string of ASCII-only symbols.
@@ -3089,7 +3081,6 @@
 
     return output.join('');
   }
-
   /**
    * Converts a Unicode string representing a domain name or an email address to
    * Punycode. Only the non-ASCII parts of the domain name will be converted,
@@ -3130,15 +3121,12 @@
   function isNull(arg) {
     return arg === null;
   }
-
   function isNullOrUndefined(arg) {
     return arg == null;
   }
-
   function isString(arg) {
     return typeof arg === 'string';
   }
-
   function isObject(arg) {
     return typeof arg === 'object' && arg !== null;
   }

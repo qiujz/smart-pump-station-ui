@@ -1,13 +1,15 @@
 import { IConfig, IPlugin } from 'umi-types';
 import defaultSettings from './defaultSettings'; // https://umijs.org/config/
-
 import slash from 'slash2';
-import webpackPlugin from './plugin.config';
-const { pwa, primaryColor } = defaultSettings; // preview.pro.ant.design only do not use in your production ;
-// preview.pro.ant.design 专用环境变量，请不要在你的项目中使用它。
+import themePluginConfig from './themePluginConfig';
 
+const {pwa} = defaultSettings;
+
+// preview.pro.ant.design only do not use in your production ;
+// preview.pro.ant.design 专用环境变量，请不要在你的项目中使用它。
 const { ANT_DESIGN_PRO_ONLY_DO_NOT_USE_IN_YOUR_PRODUCTION } = process.env;
 const isAntDesignProPreview = ANT_DESIGN_PRO_ONLY_DO_NOT_USE_IN_YOUR_PRODUCTION === 'site';
+
 const plugins: IPlugin[] = [
   [
     'umi-plugin-react',
@@ -53,29 +55,25 @@ const plugins: IPlugin[] = [
       autoAddMenu: true,
     },
   ],
-]; // 针对 preview.pro.ant.design 的 GA 统计代码
+];
 
 if (isAntDesignProPreview) {
+  // 针对 preview.pro.ant.design 的 GA 统计代码
   plugins.push([
     'umi-plugin-ga',
     {
       code: 'UA-72788897-6',
     },
   ]);
+  plugins.push(['umi-plugin-antd-theme', themePluginConfig]);
 }
 
 export default {
   plugins,
-  block: {
-    // 国内用户可以使用码云
-    // defaultGitUrl: 'https://gitee.com/ant-design/pro-blocks',
-    defaultGitUrl: 'https://github.com/ant-design/pro-blocks',
-  },
   hash: true,
   targets: {
     ie: 11,
   },
-  devtool: isAntDesignProPreview ? 'source-map' : false,
   // umi routes: https://umijs.org/zh/guide/router.html
   routes: [
     {
@@ -91,14 +89,34 @@ export default {
     },
     {
       path: '/',
-      //  component: '../layouts/SecurityLayout',
+      component: '../layouts/SecurityLayout',
       routes: [
         {
           path: '/',
           component: '../layouts/BasicLayout',
-          authority: ['admin', 'user'],
-          //authority: [  'guest'],
+          authority: ['admin'],
           routes: [
+            // {
+            //   path: '/welcome',
+            //   name: 'welcome',
+            //   icon: 'smile',
+            //   component: './Welcome',
+            //   //  authority: ['admin'],
+            // },
+            // {
+            //   path: '/admin',
+            //   name: 'admin',
+            //   icon: 'crown',
+            //   component: './Admin',
+            // //  authority: ['admin'],
+            // },
+            // {
+            //   name: '大屏展板',
+            //   icon: 'smile',
+            //   path: '/dpzb',
+            //   component: './DPZB',
+            //   //  authority: ['admin'],
+            // },
             {
               path: '/',
               redirect: '/welcome',
@@ -108,28 +126,15 @@ export default {
               name: 'welcome',
               icon: 'smile',
               component: './Welcome',
-              //  authority: ['admin'],
-            },
-            // {
-            //   path: '/admin',
-            //   name: 'admin',
-            //   icon: 'crown',
-            //   component: './Admin',
-            // //  authority: ['admin'],
-            // },
-            {
-              name: '大屏展板',
-              icon: 'smile',
-              path: '/dpzb',
-              component: './DPZB',
-              //  authority: ['admin'],
+              authority: ['admin'],
             },
             {
               name: 'GIS监测',
               icon: 'smile',
               path: '/gis',
+
               //component: './GIS',
-              //   authority: ['admin'],
+              authority: ['admin'],
               routes: [
                 {
                   name: '监测地图',
@@ -150,7 +155,8 @@ export default {
               icon: 'smile',
               path: '/yckz',
               //component: './YCKZ',
-              //    authority: ['admin'],
+              authority: ['admin'],
+
               routes: [
                 {
                   name: '操作详情',
@@ -164,8 +170,7 @@ export default {
               name: '风险预警',
               icon: 'smile',
               path: '/fxyj',
-              //component: './FXYJ',
-              //  authority: ['admin'],
+              authority: ['admin'],
               routes: [
                 {
                   name: '待处理警告',
@@ -185,8 +190,7 @@ export default {
               name: '监控抓拍',
               icon: 'smile',
               path: '/jkzp',
-              // component: './JKZP',
-              // authority: ['admin'],
+              authority: ['admin'],
               routes: [
                 {
                   name: '监控模式',
@@ -207,10 +211,7 @@ export default {
               icon: 'smile',
               path: '/jcfx',
               component: './JCFX',
-              // authority: ['admin'],
-            },
-            {
-              component: './404',
+              authority: ['admin'],
             },
           ],
         },
@@ -219,13 +220,14 @@ export default {
         },
       ],
     },
+
     {
       component: './404',
     },
   ],
   // Theme for antd: https://ant.design/docs/react/customize-theme-cn
   theme: {
-    'primary-color': primaryColor,
+    // ...darkTheme,
   },
   define: {
     ANT_DESIGN_PRO_ONLY_DO_NOT_USE_IN_YOUR_PRODUCTION:
@@ -270,21 +272,12 @@ export default {
   manifest: {
     basePath: '/',
   },
-  chainWebpack: webpackPlugin,
-  /*
-  proxy: {
-    '/server/api/': {
-      target: 'https://preview.pro.ant.design/',
-      changeOrigin: true,
-      pathRewrite: { '^/server': '' },
-    },
-  },
-  */
+  // chainWebpack: webpackPlugin,
   // proxy: {
-  //   '/gis': {
-  //     target:  'http://localhost:9999/log',
+  //   '/server/api/': {
+  //     target: 'https://preview.pro.ant.design/',
   //     changeOrigin: true,
-  //
+  //     pathRewrite: { '^/server': '' },
   //   },
   // },
 } as IConfig;

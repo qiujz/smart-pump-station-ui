@@ -1,5 +1,5 @@
 import request from '@/utils/request';
-import request1 from '@/utils/request1';
+import Constants from '@/utils/Constants';
 
 export interface LoginParamsType {
   userName: string;
@@ -9,12 +9,12 @@ export interface LoginParamsType {
 }
 
 export async function fakeAccountLogin(params: LoginParamsType) {
-  return request('/api/login/account', {
+  return request(Constants.baseUrl + '/api/login/account', {
     method: 'POST',
     data: params,
   });
 }
 
 export async function getFakeCaptcha(mobile: string) {
-  return request(`/api/login/captcha?mobile=${mobile}`);
+  return request(Constants.baseUrl + `/api/login/captcha?mobile=${mobile}`);
 }

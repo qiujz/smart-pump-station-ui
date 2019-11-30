@@ -6,7 +6,6 @@ const mockFile = require('./index');
 const BODY_PARSED_METHODS = ['post', 'put', 'patch'];
 
 const debug = console.log;
-
 function parseKey(key) {
   let method = 'get';
   let path = key;
@@ -31,7 +30,6 @@ function createHandler(method, path, handler) {
         res.json(handler);
       }
     }
-
     if (BODY_PARSED_METHODS.includes(method)) {
       bodyParser.json({limit: '5mb', strict: false})(req, res, () => {
         bodyParser.urlencoded({limit: '5mb', extended: true})(req, res, () => {
@@ -66,7 +64,6 @@ const mockData = normalizeConfig(mockFile);
 function matchMock(req) {
   const {path: exceptPath} = req;
   const exceptMethod = req.method.toLowerCase();
-
   function decodeParam(val) {
     if (typeof val !== 'string' || val.length === 0) {
       return val;
@@ -84,7 +81,6 @@ function matchMock(req) {
       throw err;
     }
   }
-
   // eslint-disable-next-line no-restricted-syntax
   for (const mock of mockData) {
     const {method, re, keys} = mock;
@@ -110,7 +106,6 @@ function matchMock(req) {
 
   return mockData.filter(({method, re}) => method === exceptMethod && re.test(exceptPath))[0];
 }
-
 module.exports = (req, res, next) => {
   const match = matchMock(req);
   if (match) {

@@ -17,6 +17,7 @@
     "suppressImplicitAnyIndexErrors": true,
     "noUnusedLocals": true,
     "allowJs": true,
+    "skipLibCheck": true,
     "experimentalDecorators": true,
     "strict": true,
     "paths": {
@@ -28,6 +29,7 @@
   "exclude": [
     "node_modules",
     "build",
+    "dist",
     "scripts",
     "acceptance-tests",
     "webpack",

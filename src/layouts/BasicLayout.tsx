@@ -46,7 +46,6 @@ export interface BasicLayoutProps extends ProLayoutProps {
   settings: Settings;
   dispatch: Dispatch;
 }
-
 export type BasicLayoutContext = { [K in 'location']: BasicLayoutProps[K] } & {
   breadcrumbNameMap: {
     [path: string]: MenuDataItem;
@@ -68,50 +67,51 @@ const menuDataRender = (menuList: MenuDataItem[]): MenuDataItem[] =>
 const defaultFooterDom = (
   <DefaultFooter
     // copyright="2019 蚂蚁金服体验技术部出品"
-    // links={[
-    //   {
-    //     key: 'Ant Design Pro',
-    //     title: 'Ant Design Pro',
-    //     href: 'https://pro.ant.design',
-    //     blankTarget: true,
-    //   },
-    //   {
-    //     key: 'github',
-    //     title: <Icon type="github" />,
-    //     href: 'https://github.com/ant-design/ant-design-pro',
-    //     blankTarget: true,
-    //   },
-    //   {
-    //     key: 'Ant Design',
-    //     title: 'Ant Design',
-    //     href: 'https://ant.design',
-    //     blankTarget: true,
-    //   },
-    // ]}
+    copyright="2019 洛阳智慧泵站"
+    links={[
+      {
+        key: 'Ant Design Pro',
+        title: '洛阳智慧泵站',
+        href: 'https://pro.ant.design',
+        blankTarget: true,
+      },
+      {
+        key: 'github',
+        title: <Icon type="github"/>,
+        href: 'https://github.com/ant-design/ant-design-pro',
+        blankTarget: true,
+      },
+      {
+        key: 'Ant Design',
+        title: '洛阳智慧泵站',
+        href: 'https://ant.design',
+        blankTarget: true,
+      },
+    ]}
   />
 );
 
 const footerRender: BasicLayoutProps['footerRender'] = () => {
   if (!isAntDesignPro()) {
-    // return defaultFooterDom;
+    return defaultFooterDom;
   }
   return (
     <>
-      {/* {defaultFooterDom} */}
-      {/* <div */}
-      {/*  style={{ */}
-      {/*    padding: '0px 24px 24px', */}
-      {/*    textAlign: 'center', */}
-      {/*  }} */}
-      {/* > */}
-      {/*  <a href="https://www.netlify.com" target="_blank" rel="noopener noreferrer"> */}
-      {/*    <img */}
-      {/*      src="https://www.netlify.com/img/global/badges/netlify-color-bg.svg" */}
-      {/*      width="82px" */}
-      {/*      alt="netlify logo" */}
-      {/*    /> */}
-      {/*  </a> */}
-      {/* </div> */}
+      {/*{defaultFooterDom}*/}
+      {/*<div*/}
+      {/*  style={{*/}
+      {/*    padding: '0px 24px 24px',*/}
+      {/*    textAlign: 'center',*/}
+      {/*  }}*/}
+      {/*>*/}
+      {/*  <a href="https://www.netlify.com" target="_blank" rel="noopener noreferrer">*/}
+      {/*    <img*/}
+      {/*      src="https://www.netlify.com/img/global/badges/netlify-color-bg.svg"*/}
+      {/*      width="82px"*/}
+      {/*      alt="netlify logo"*/}
+      {/*    />*/}
+      {/*  </a>*/}
+      {/*</div>*/}
     </>
   );
 };
@@ -126,9 +126,6 @@ const BasicLayout: React.FC<BasicLayoutProps> = props => {
     if (dispatch) {
       dispatch({
         type: 'user/fetchCurrent',
-      });
-      dispatch({
-        type: 'settings/getSetting',
       });
     }
   }, []);
@@ -151,6 +148,12 @@ const BasicLayout: React.FC<BasicLayoutProps> = props => {
   return (
     <ProLayout
       logo={logo}
+      menuHeaderRender={(logoDom, titleDom) => (
+        <Link to="/">
+          {logoDom}
+          {titleDom}
+        </Link>
+      )}
       onCollapse={handleMenuCollapse}
       menuItemRender={(menuItemProps, defaultDom) => {
         if (menuItemProps.isUrl || menuItemProps.children) {

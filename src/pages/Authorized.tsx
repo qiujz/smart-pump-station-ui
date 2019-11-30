@@ -46,10 +46,7 @@ const AuthComponent: React.FC<AuthComponentProps> = ({
   return (
     <Authorized
       authority={getRouteAuthority(location.pathname, routes) || ''}
-      //noMatch={isLogin ? <Redirect to="/exception/403"/> : <Redirect to="/user/login"/>}
-      noMatch={isLogin ? <Redirect to="/welcome" /> : <Redirect to="/user/login" />}
-      //currentAuthority={currentAuthority}
-      // noMatch={<Redirect to="/welcome" />}
+      noMatch={isLogin ? <Redirect to="/exception/403"/> : <Redirect to="/user/login"/>}
     >
       {children}
     </Authorized>
