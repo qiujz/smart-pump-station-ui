@@ -5,12 +5,11 @@ import {
   Col,
   DatePicker,
   Divider,
-  Dropdown,
   Form,
   Icon,
   Input,
   InputNumber,
-  Menu,
+  // Menu,
   Row,
   Select,
   message,
@@ -41,7 +40,8 @@ const getValue = (obj: { [x: string]: string[] }) =>
 type IStatusMapType = 'default' | 'processing' | 'success' | 'error';
 const statusMap = ['default', 'processing', 'success', 'error'];
 const status = ['关闭', '运行中', '已上线', '异常'];
-
+let controll: number[] = [27, 28, 29, 60, 61, 62, 78, 79, 89, 90, 103, 104, 116, 117];
+let interval: any = undefined;
 interface TableListProps extends FormComponentProps {
   dispatch: Dispatch<any>;
   loading: boolean;
@@ -187,14 +187,16 @@ class TableList extends Component<TableListProps, TableListState> {
     {
       title: '操作',
       render: (text: any, record: any, index: number) => {
-        if (index === 3) {
-          return (
-            <Fragment>
-              <Button type="primary" onClick={() => this.handleUpdateModalVisible(true, record)}>
-                设置
-              </Button>
-            </Fragment>
-          );
+        for (let c of controll) {
+          if (index === c) {
+            return (
+              <Fragment>
+                <Button type="primary" onClick={() => this.handleUpdateModalVisible(true, record)}>
+                  设置
+                </Button>
+              </Fragment>);
+          }
+
         }
         return null;
       },
@@ -209,11 +211,15 @@ class TableList extends Component<TableListProps, TableListState> {
 
   componentDidMount() {
     const { dispatch } = this.props;
-    setInterval(() => {
+    interval = setInterval(() => {
       dispatch({
         type: 'listTableListLog/LatestAll',
       });
     }, 1000);
+  }
+
+  componentWillUnmount(): void {
+    clearInterval(interval);
   }
 
   handleStandardTableChange = (
@@ -484,12 +490,12 @@ class TableList extends Component<TableListProps, TableListState> {
     } = this.props;
 
     const { selectedRows, modalVisible, updateModalVisible, stepFormValues } = this.state;
-    const menu = (
-      <Menu onClick={this.handleMenuClick} selectedKeys={[]}>
-        <Menu.Item key="remove">删除</Menu.Item>
-        <Menu.Item key="approval">批量审批</Menu.Item>
-      </Menu>
-    );
+    // const menu = (
+    //   <Menu onClick={this.handleMenuClick} selectedKeys={[]}>
+    //     <Menu.Item key="remove">删除</Menu.Item>
+    //     <Menu.Item key="approval">批量审批</Menu.Item>
+    //   </Menu>
+    // );
 
     const parentMethods = {
       handleAdd: this.handleAdd,

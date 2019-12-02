@@ -12,7 +12,7 @@ const locationIcon = {
 };
 */
 
-export default class extends Component {
+class Bmap extends Component {
   constructor(props) {
     super(props);
 
@@ -187,3 +187,5 @@ export default class extends Component {
     );
   }
 }
+
+export default Bmap;
