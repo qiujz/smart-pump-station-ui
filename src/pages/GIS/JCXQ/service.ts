@@ -1,6 +1,5 @@
 import request from '@/utils/request';
 import { TableListParams } from './data.d';
-import Constants from '@/utils/Constants';
 
 export async function queryRule(params: TableListParams) {
   return request('/api/rule', {
@@ -9,7 +8,7 @@ export async function queryRule(params: TableListParams) {
 }
 
 export async function LatestAll(params: TableListParams) {
-  return request(`${Constants.baseUrl}/log/LatestAll`, {
+  return request(`/api/log/LatestAll`, {
     params,
   });
 }
@@ -45,5 +44,5 @@ export async function updateRule(params: TableListParams) {
 }
 
 export async function setValue(params: TableListParams) {
-  return request(`${Constants.baseUrl}/log/setValue`, { params });
+  return request(`/api/log/setValue`, {params});
 }

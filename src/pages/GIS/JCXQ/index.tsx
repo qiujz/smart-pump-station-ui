@@ -40,7 +40,7 @@ const getValue = (obj: { [x: string]: string[] }) =>
 type IStatusMapType = 'default' | 'processing' | 'success' | 'error';
 const statusMap = ['default', 'processing', 'success', 'error'];
 const status = ['关闭', '运行中', '已上线', '异常'];
-let controll: number[] = [27, 28, 29, 60, 61, 62, 78, 79, 89, 90, 103, 104, 116, 117];
+let controll: number[] = [27, 28, 29, 60, 61, 62, 78, 79, 89, 90, 103, 104, 116, 117, 119, 120];
 let interval: any = undefined;
 interface TableListProps extends FormComponentProps {
   dispatch: Dispatch<any>;
@@ -215,7 +215,7 @@ class TableList extends Component<TableListProps, TableListState> {
       dispatch({
         type: 'listTableListLog/LatestAll',
       });
-    }, 1000);
+    }, 5000);
   }
 
   componentWillUnmount(): void {
@@ -354,7 +354,7 @@ class TableList extends Component<TableListProps, TableListState> {
   handleUpdate = (fields: FormValsType) => {
     const { dispatch } = this.props;
     dispatch({
-      type: 'listTableList/setValue',
+      type: 'listTableListLog/setValue',
       payload: {
         code: fields.code,
         value: fields.value,

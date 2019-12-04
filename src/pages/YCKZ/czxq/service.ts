@@ -1,6 +1,5 @@
 import request from '@/utils/request';
 import { TableListParams } from './data.d';
-import Constants from '@/utils/Constants';
 
 export async function queryRule(params: TableListParams) {
   return request('/api/rule', {
@@ -9,7 +8,7 @@ export async function queryRule(params: TableListParams) {
 }
 
 export async function allOperateLog(params: TableListParams) {
-  return request(`${Constants.baseUrl}/log/alloperatelog`, {
+  return request(`/api/log/alloperatelog`, {
     params,
   });
 }

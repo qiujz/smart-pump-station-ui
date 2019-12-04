@@ -20,6 +20,7 @@ export interface TableListItem {
   name: string;
   description: string;
   value: string;
+  date: Date;
 
 }
 
@@ -28,6 +29,7 @@ export interface TableData {
   name: string;
   description: string;
   value: string;
+
 
 }
 

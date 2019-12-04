@@ -3,7 +3,7 @@ import { TableListParams } from './data.d';
 import Constants from '@/utils/Constants';
 
 export async function queryRule(params: TableListParams) {
-  return request(Constants.baseUrl + '/warning/allPWLog', {
+  return request(Constants.baseUrl + '/api/warning/allPWLog', {
     params,
   });
 }

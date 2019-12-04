@@ -1,6 +1,6 @@
 import {AnyAction, Reducer} from 'redux';
 import {EffectsCommandMap} from 'dva';
-import {addRule, queryRule, removeRule, updateRule, LatestByCodeArray, setValue} from './service';
+import {addRule, queryRule, removeRule, updateRule, latestByCodeArray, setValue} from './service';
 
 import {TableListData} from './data.d';
 
@@ -22,7 +22,7 @@ export interface ModelType {
     remove: Effect;
     update: Effect;
     setValue: Effect;
-    LatestByCodeArray: Effect;
+    latestByCodeArray: Effect;
   };
   reducers: {
     save: Reducer<StateType>;
@@ -47,8 +47,8 @@ const Model: ModelType = {
         payload: response,
       });
     },
-    * LatestByCodeArray({payload}, {call, put}) {
-      const response = yield call(LatestByCodeArray, payload);
+    * latestByCodeArray({payload}, {call, put}) {
+      const response = yield call(latestByCodeArray, payload);
       yield put({
         type: 'save',
         payload: response,

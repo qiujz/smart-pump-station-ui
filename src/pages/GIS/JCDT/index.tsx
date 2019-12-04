@@ -3,7 +3,6 @@ import {
   Map,
   Polygon,
   Base,
-  MapType,
   Constants,
   Marker,
   Label,
@@ -12,7 +11,6 @@ import {
 import styles from './index.less';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import {Drawer, Table} from "antd";
-import {FormComponentProps} from "antd/es/form";
 import {Dispatch} from "redux";
 import {StateType} from "@/pages/GIS/JCDT/model";
 import {connect} from "dva";
@@ -51,45 +49,48 @@ const polygonPoints = [
 ];
 
 
-// interface TableListProps extends FormComponentProps {
-//   dispatch: Dispatch<any>;
-//   loading: boolean;
-//   listTableListDt: StateType;
-//
-// }
-//
-// interface TableListState {
-//   drawerVisible: boolean;
-//   drawerTitle: string;
-//   drawerContent: string;
-//
-// }
+interface TableListProps {
+  dispatch: Dispatch<any>;
+  loading: boolean;
+  listTableListDt: StateType;
 
-/* eslint react/no-multi-comp:0 */
-// @connect(
-//   ({
-//      listTableListDt,
-//      loading,
-//    }: {
-//     listTableListDt: StateType;
-//     loading: {
-//       models: {
-//         [key: string]: boolean;
-//       };
-//     };
-//   }) => ({
-//     listTableListDt,
-//     loading: loading.models.rule,
-//   }),
-// )
+}
 
-class PumpMap extends Component {
-  state = {
+interface TableListState {
+  drawerVisible: boolean;
+  drawerTitle: string;
+  drawerContent: string;
+  isShow: boolean;
+}
+
+//
+// /* eslint react/no-multi-comp:0 */
+@connect(
+  ({
+     listTableListDt,
+     loading,
+   }: {
+    listTableListDt: StateType;
+    loading: {
+      models: {
+        [key: string]: boolean;
+      };
+    };
+  }) => ({
+    listTableListDt,
+    loading: loading.models.rule,
+  }),
+)
+
+class PumpMap extends Component <TableListProps, TableListState> {
+
+  state: TableListState = {
     drawerVisible: false,
     drawerTitle: '',
     drawerContent: '',
-    isShow: true,
-  };
+    isShow: false,
+  }
+
 
 
   columns1 = [
@@ -107,20 +108,24 @@ class PumpMap extends Component {
       title: '数值',
       dataIndex: 'value',
     },
+    {
+      title: '上报时间',
+      dataIndex: 'date'
+    }
 
   ];
-
-  MP(ak: string) {
-    return new Promise(function (resolve, reject) {
-      var script = document.createElement('script')
-      script.type = 'text/javascript'
-      script.src = `http://api.map.baidu.com/api?v=3.0&ak=${ak}&callback=init`;
-      document.head.appendChild(script)
-      window.init = () => {
-        resolve(window.BMap)
-      }
-    })
-  }
+  //
+  // MP(ak: string) {
+  //   return new Promise(function (resolve, reject) {
+  //     var script = document.createElement('script')
+  //     script.type = 'text/javascript'
+  //     script.src = `http://api.map.baidu.com/api?v=3.0&ak=${ak}&callback=init`;
+  //     document.head.appendChild(script)
+  //     window.init = () => {
+  //       resolve(window.BMap)
+  //     }
+  //   })
+  // }
 
   // componentDidMount(){
   //   // @ts-ignore
@@ -133,6 +138,10 @@ class PumpMap extends Component {
   // }
 
 
+  componentWillUnmount(): void {
+    clearInterval(interval);
+  }
+
 
 
   showDrawer = (content: string) => {
@@ -144,12 +153,20 @@ class PumpMap extends Component {
     //
     // };
     // let data2=[];
+
+    const {dispatch} = this.props;
+    let code: any = [];
     switch (content) {
+
       case "镇北排涝站":
         this.state.drawerTitle = "镇北排涝站";
         this.state.drawerContent = "分割内外河水位。暂未接入平台";
-        // let code:string[]=["0000103","0000108","0000135","0000136","0000146","0000147"];
-        // let code1=JSON.stringify(code);
+        break;
+      case "截留泵站-泵站内":
+        this.state.drawerTitle = "截留泵站-泵站内";
+        this.state.drawerContent = "设备面板+2个监控面板，设备面板显示两个泵的运行状态";
+        code = ["0000103", "0000108", "0000135", "0000136", "0000146", "0000147"];
+        //let code1=JSON.stringify(code);
         // let i=0;
         // for(let ldt in this.props.listTableListDt.data.list){
         //   for (let c of code){
@@ -164,31 +181,39 @@ class PumpMap extends Component {
         //     }
         //   }
         // }
-        // const { dispatch } = this.props;
-        //
-        // interval=setInterval(() => {
-        //   dispatch({
-        //     type: 'listTableListDt/LatestByCodeArray',
-        //     payload:{code:code1},
-        //   });
-        // }, 1000);
 
+        interval = setInterval(() => {
+          dispatch({
+            type: 'listTableListDt/latestByCodeArray',
+            payload: {code: code},
+          });
+        }, 2000);
         break;
-      case "截留泵站-泵站内":
-        this.state.drawerTitle = "截留泵站-泵站内";
-        this.state.drawerContent = "设备面板+2个监控面板，设备面板显示两个泵的运行状态";
-        break;
-      case "镇北排涝站":
+      case "截留泵站-河岸边":
         this.state.drawerTitle = "截留泵站-河岸边";
         this.state.drawerContent = "监控面板";
         break;
       case "截留泵站-西闸":
         this.state.drawerTitle = "截留泵站-西闸";
         this.state.drawerContent = "设备面板+监控面板，设备面板显示闸门的开关状态（通过启闭机的开关信号确定）";
+        code = ["0000160", "0000161"];
+        interval = setInterval(() => {
+          dispatch({
+            type: 'listTableListDt/latestByCodeArray',
+            payload: {code: code},
+          });
+        }, 2000);
         break;
       case "截留泵站-东闸":
         this.state.drawerTitle = "截留泵站-东闸";
         this.state.drawerContent = "设备面板+监控面板，设备面板显示闸门的开关状态（通过启闭机的开关信号确定）";
+        code = ["0000173", "0000174"];
+        interval = setInterval(() => {
+          dispatch({
+            type: 'listTableListDt/latestByCodeArray',
+            payload: {code: code},
+          });
+        }, 2000);
         break;
       case "循环水泵站-人工湿地旁":
         this.state.drawerTitle = "循环水泵站-人工湿地旁";
@@ -197,6 +222,13 @@ class PumpMap extends Component {
       case "循环水泵站-泵站内":
         this.state.drawerTitle = "循环水泵站-泵站内";
         this.state.drawerContent = "设备面板+监控面板，设备面板显示两个泵的运行状态";
+        code = ["0000005", "0000010"];
+        interval = setInterval(() => {
+          dispatch({
+            type: 'listTableListDt/latestByCodeArray',
+            payload: {code: code},
+          });
+        }, 2000);
         break;
       case "循环水泵站-河岸取水口":
         this.state.drawerTitle = "循环水泵站-河岸取水口";
@@ -220,15 +252,15 @@ class PumpMap extends Component {
     clearInterval(interval);
   };
   handleClick = () => {
-    console.log('click');
+    //  console.log('click');
 
-    this.setState({isShow: true});
+    this.setState({isShow: false});
   }
   handleDbClick = () => {
-    console.log('dbclick');
+    // console.log('dbclick');
 
     this.setState({
-      isShow: false
+      isShow: true
     });
   }
   //
@@ -256,17 +288,17 @@ class PumpMap extends Component {
   // }
 
   render() {
-    // const {
-    //   listTableListDt: { data },
-    //   loading,
-    // } = this.props;
+    const {
+      listTableListDt: {data},
+      loading,
+    } = this.props;
     let {
       isShow,
     } = this.state;
 
     return (
 
-      //   <PageHeaderWrapper>
+      <PageHeaderWrapper>
       <div className={styles.main}>
         <Map
           ak="R6nej5fILtmiQ2BUh6EfRmy3"
@@ -396,11 +428,16 @@ class PumpMap extends Component {
           <Drawer
             title={this.state.drawerTitle}
             placement="top"
-            closable={false}
+            closable={true}
             onClose={this.onClose}
             visible={this.state.drawerVisible}
           >
-
+            <p>{this.state.drawerContent}</p>
+            <Table
+              dataSource={data.list}
+              columns={this.columns1}
+              pagination={false}
+            />
           </Drawer>
 
           <Label>
@@ -431,7 +468,7 @@ class PumpMap extends Component {
         {/*<Button onClick={this.handleEnable}>开启线、面编辑功能</Button>*/}
         {/*<Button onClick={this.handleDisable}>关闭线、面编辑功能</Button>*/}
       </div>
-      //  </PageHeaderWrapper>
+      </PageHeaderWrapper>
     );
   }
 }
