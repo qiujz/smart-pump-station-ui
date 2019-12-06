@@ -21,6 +21,7 @@ export interface TableListItem {
   description: string;
   value: string;
   date: Date;
+  comments: string;
 
 }
 

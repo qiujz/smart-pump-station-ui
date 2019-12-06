@@ -7,10 +7,11 @@ import {
   Marker,
   Label,
   Ground,
+
 } from 'rc-bmap';
 import styles from './index.less';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
-import {Drawer, Table} from "antd";
+import {Drawer, Table, Button,} from "antd";
 import {Dispatch} from "redux";
 import {StateType} from "@/pages/GIS/JCDT/model";
 import {connect} from "dva";
@@ -61,6 +62,7 @@ interface TableListState {
   drawerTitle: string;
   drawerContent: string;
   isShow: boolean;
+  tableVisible: boolean;
 }
 
 //
@@ -89,6 +91,7 @@ class PumpMap extends Component <TableListProps, TableListState> {
     drawerTitle: '',
     drawerContent: '',
     isShow: false,
+    tableVisible: true,
   }
 
 
@@ -104,9 +107,14 @@ class PumpMap extends Component <TableListProps, TableListState> {
       dataIndex: 'description',
     },
     {
-      key: 'value',
+
       title: '数值',
       dataIndex: 'value',
+    },
+    {
+
+      title: '备注',
+      dataIndex: 'comments',
     },
     {
       title: '上报时间',
@@ -161,6 +169,10 @@ class PumpMap extends Component <TableListProps, TableListState> {
       case "镇北排涝站":
         this.state.drawerTitle = "镇北排涝站";
         this.state.drawerContent = "分割内外河水位。暂未接入平台";
+        clearInterval(interval);
+        this.setState({
+          tableVisible: false,
+        });
         break;
       case "截留泵站-泵站内":
         this.state.drawerTitle = "截留泵站-泵站内";
@@ -188,10 +200,17 @@ class PumpMap extends Component <TableListProps, TableListState> {
             payload: {code: code},
           });
         }, 2000);
+        this.setState({
+          tableVisible: true,
+        });
         break;
       case "截留泵站-河岸边":
         this.state.drawerTitle = "截留泵站-河岸边";
         this.state.drawerContent = "监控面板";
+        clearInterval(interval);
+        this.setState({
+          tableVisible: false,
+        });
         break;
       case "截留泵站-西闸":
         this.state.drawerTitle = "截留泵站-西闸";
@@ -203,6 +222,9 @@ class PumpMap extends Component <TableListProps, TableListState> {
             payload: {code: code},
           });
         }, 2000);
+        this.setState({
+          tableVisible: true,
+        });
         break;
       case "截留泵站-东闸":
         this.state.drawerTitle = "截留泵站-东闸";
@@ -214,10 +236,17 @@ class PumpMap extends Component <TableListProps, TableListState> {
             payload: {code: code},
           });
         }, 2000);
+        this.setState({
+          tableVisible: true,
+        });
         break;
       case "循环水泵站-人工湿地旁":
         this.state.drawerTitle = "循环水泵站-人工湿地旁";
         this.state.drawerContent = "监控面板";
+        clearInterval(interval);
+        this.setState({
+          tableVisible: false,
+        });
         break;
       case "循环水泵站-泵站内":
         this.state.drawerTitle = "循环水泵站-泵站内";
@@ -229,14 +258,25 @@ class PumpMap extends Component <TableListProps, TableListState> {
             payload: {code: code},
           });
         }, 2000);
+        this.setState({
+          tableVisible: true,
+        });
         break;
       case "循环水泵站-河岸取水口":
         this.state.drawerTitle = "循环水泵站-河岸取水口";
         this.state.drawerContent = "监控面板";
+        clearInterval(interval);
+        this.setState({
+          tableVisible: false,
+        });
         break;
       case "洛阳二号泵站":
         this.state.drawerTitle = "洛阳二号泵站";
         this.state.drawerContent = "提升泵站。暂未接入平台";
+        clearInterval(interval);
+        this.setState({
+          tableVisible: false,
+        });
         break;
 
     }
@@ -290,26 +330,30 @@ class PumpMap extends Component <TableListProps, TableListState> {
   render() {
     const {
       listTableListDt: {data},
-      loading,
     } = this.props;
     let {
       isShow,
+      tableVisible,
     } = this.state;
 
     return (
 
       <PageHeaderWrapper>
       <div className={styles.main}>
+
+        <Button onClick={this.handleDbClick}>开启工程图</Button>
+        <Button onClick={this.handleClick}>关闭工程图</Button>
+
         <Map
           ak="R6nej5fILtmiQ2BUh6EfRmy3"
           zoom={19}
           scrollWheelZoom
           mapType={MAP_TYPE.SATELLITE}
         >
-          <Events
-            click={this.handleClick}
-            dblclick={this.handleDbClick}
-          />
+          {/*<Events*/}
+          {/*  click={this.handleClick}*/}
+          {/*  dblclick={this.handleDbClick}*/}
+          {/*/>*/}
           <Point name="center" lng="120.0918750000" lat="31.6560620000"/>
 
           {isShow && <Ground
@@ -433,11 +477,13 @@ class PumpMap extends Component <TableListProps, TableListState> {
             visible={this.state.drawerVisible}
           >
             <p>{this.state.drawerContent}</p>
+            {tableVisible &&
             <Table
-              dataSource={data.list}
-              columns={this.columns1}
-              pagination={false}
+                dataSource={data.list}
+                columns={this.columns1}
+                pagination={false}
             />
+            }
           </Drawer>
 
           <Label>
@@ -465,8 +511,7 @@ class PumpMap extends Component <TableListProps, TableListState> {
 
 
         </Map>
-        {/*<Button onClick={this.handleEnable}>开启线、面编辑功能</Button>*/}
-        {/*<Button onClick={this.handleDisable}>关闭线、面编辑功能</Button>*/}
+
       </div>
       </PageHeaderWrapper>
     );

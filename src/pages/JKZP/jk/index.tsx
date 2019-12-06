@@ -1,12 +1,12 @@
-import { PageHeaderWrapper } from '@ant-design/pro-layout';
-import React, { useState, useEffect } from 'react';
-import { Button, Card, Col, Divider, Row, Spin } from 'antd';
-import styles from './index.less';
+import {PageHeaderWrapper} from '@ant-design/pro-layout';
+import React from 'react';
+import {Button, Card, Col, Divider, Row} from 'antd';
+//import request from '@/utils/request';
 
 export default () => {
-  const AccessToken = 'at.4wgolp5380vxj6f6205sunvd3n9qkss5-1sd2nu8tz7-0yj39ao-ixbmc3rdz';
+  let AccessToken = 'at.58ava0zrd6cu4c3m014osord0oq2hu45-4g2j8vgtvc-1vdhk66-7xsi78nic';
   let autoplay = 0;
-  var arr: Array<string> = [
+  let arr: Array<string> = [
     'D54877405',
     '240209926',
     'D74121766',
@@ -16,10 +16,29 @@ export default () => {
     'D02451918',
     'D02451942',
   ];
+  // request('https://open.ys7.com/api/lapp/token/get', {
+  //   headers: {
+  //     'Content-Type': 'application/x-www-form-urlencoded'
+  //   },
+  //   method: 'POST',
+  //   params: {
+  //     appKey: '9912e827691b4388bee44f6e11547d6f',
+  //     appSecret: '43001952c9770cc2f4d315dc3254dfca',
+  //   },
+  // })
+  //   .then(function (response) {
+  //     //let str=JSON.parse(response);
+  //     console.log(response);
+  //
+  //
+  //   })
+  //   .catch(function (error) {
+  //     console.log(error);
+  //   });
 
   return (
     <PageHeaderWrapper>
-      <div style={{ background: '#ECECEC', padding: '30px' }}>
+      <div style={{background: '#ECECEC', padding: '30px'}}>
         <Row gutter={16}>
           <Col span={12}>
             <Card title="循环水泵站" bordered>
@@ -37,7 +56,7 @@ export default () => {
                 height="400"
                 id={arr[0]}
                 allowFullScreen
-              ></iframe>
+              />
             </Card>
             <Button
               type="primary"
@@ -54,7 +73,7 @@ export default () => {
             >
               播放
             </Button>
-            <Divider type="vertical" />
+            <Divider type="vertical"/>
             <Button
               type="primary"
               onClick={() => {
@@ -86,7 +105,7 @@ export default () => {
                 height="400"
                 id={arr[1]}
                 allowFullScreen
-              ></iframe>
+              />
             </Card>
             <Button
               type="primary"
@@ -102,7 +121,7 @@ export default () => {
             >
               播放
             </Button>
-            <Divider type="vertical" />
+            <Divider type="vertical"/>
             <Button
               type="primary"
               onClick={() => {
@@ -136,7 +155,7 @@ export default () => {
                 height="400"
                 id={arr[2]}
                 allowFullScreen
-              ></iframe>
+              />
             </Card>
             <Button
               type="primary"
@@ -153,7 +172,7 @@ export default () => {
             >
               播放
             </Button>
-            <Divider type="vertical" />
+            <Divider type="vertical"/>
             <Button
               type="primary"
               onClick={() => {
@@ -186,7 +205,7 @@ export default () => {
                 height="400"
                 id={arr[3]}
                 allowFullScreen
-              ></iframe>
+              />
             </Card>
             <Button
               type="primary"
@@ -203,7 +222,7 @@ export default () => {
             >
               播放
             </Button>
-            <Divider type="vertical" />
+            <Divider type="vertical"/>
             <Button
               type="primary"
               onClick={() => {
@@ -238,7 +257,7 @@ export default () => {
                 height="400"
                 id={arr[4]}
                 allowFullScreen
-              ></iframe>
+              />
             </Card>
             <Button
               type="primary"
@@ -255,7 +274,7 @@ export default () => {
             >
               播放
             </Button>
-            <Divider type="vertical" />
+            <Divider type="vertical"/>
             <Button
               type="primary"
               onClick={() => {
@@ -288,7 +307,7 @@ export default () => {
                 height="400"
                 id={arr[5]}
                 allowFullScreen
-              ></iframe>
+              />
             </Card>
             <Button
               type="primary"
@@ -305,7 +324,7 @@ export default () => {
             >
               播放
             </Button>
-            <Divider type="vertical" />
+            <Divider type="vertical"/>
             <Button
               type="primary"
               onClick={() => {
@@ -340,7 +359,7 @@ export default () => {
                 height="400"
                 id={arr[6]}
                 allowFullScreen
-              ></iframe>
+              />
             </Card>
             <Button
               type="primary"
@@ -357,7 +376,7 @@ export default () => {
             >
               播放
             </Button>
-            <Divider type="vertical" />
+            <Divider type="vertical"/>
             <Button
               type="primary"
               onClick={() => {
@@ -390,7 +409,7 @@ export default () => {
                 height="400"
                 id={arr[7]}
                 allowFullScreen
-              ></iframe>
+              />
             </Card>
             <Button
               type="primary"
@@ -407,7 +426,7 @@ export default () => {
             >
               播放
             </Button>
-            <Divider type="vertical" />
+            <Divider type="vertical"/>
             <Button
               type="primary"
               onClick={() => {

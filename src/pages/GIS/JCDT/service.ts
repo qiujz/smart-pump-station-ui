@@ -1,14 +1,15 @@
 import request from '@/utils/request';
 import {TableListParams} from './data.d';
+import Constants from "@/utils/Constants";
 
 export async function queryRule(params: TableListParams) {
-  return request('/api/rule', {
+  return request(Constants.baseUrl + '/rule', {
     params,
   });
 }
 
 export async function latestByCodeArray(params: any) {
-  return request(`/api/log/latestByCodeArray`, {
+  return request(Constants.baseUrl + `/log/latestByCodeArray`, {
     method: 'POST',
     // params,
     //  headers:{'Content-Type': 'multipart/form-data',
@@ -22,7 +23,7 @@ export async function latestByCodeArray(params: any) {
 }
 
 export async function removeRule(params: TableListParams) {
-  return request('/api/rule', {
+  return request(Constants.baseUrl + '/rule', {
     method: 'POST',
     data: {
       ...params,
@@ -32,7 +33,7 @@ export async function removeRule(params: TableListParams) {
 }
 
 export async function addRule(params: TableListParams) {
-  return request('/api/rule', {
+  return request(Constants.baseUrl + '/rule', {
     method: 'POST',
     data: {
       ...params,
@@ -42,7 +43,7 @@ export async function addRule(params: TableListParams) {
 }
 
 export async function updateRule(params: TableListParams) {
-  return request('/api/rule', {
+  return request(Constants.baseUrl + '/rule', {
     method: 'POST',
     data: {
       ...params,
@@ -52,5 +53,5 @@ export async function updateRule(params: TableListParams) {
 }
 
 export async function setValue(params: TableListParams) {
-  return request(`/api/log/setValue`, {params});
+  return request(Constants.baseUrl + `/log/setValue`, {params});
 }

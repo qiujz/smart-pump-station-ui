@@ -279,11 +279,11 @@ export default {
     //   changeOrigin: true,
     //   pathRewrite: { '^/api': '' },
     // },
-    '/api': {
-      target: 'http://47.100.2.229:9999',
-      changeOrigin: true,
-      pathRewrite: {'^/api': ''},
-    },
+    // '/api': {
+    //   target: 'http://47.100.2.229:9999',
+    //   changeOrigin: true,
+    //   pathRewrite: {'^/api': ''},
+    // },
   },
 
 } as IConfig;

@@ -41,7 +41,7 @@ const getValue = (obj: { [x: string]: string[] }) =>
 type IStatusMapType = 'default' | 'processing' | 'success' | 'error';
 const statusMap = ['default', 'processing', 'success', 'error'];
 const status = ['关闭', '运行中', '已上线', '异常'];
-
+let interval: any = undefined;
 interface TableListProps extends FormComponentProps {
   dispatch: Dispatch<any>;
   loading: boolean;
@@ -173,13 +173,16 @@ class TableList extends Component<TableListProps, TableListState> {
 
   componentDidMount() {
     const { dispatch } = this.props;
-    setInterval(() => {
+    interval = setInterval(() => {
       dispatch({
         type: 'listTableListOperateWarningLog/fetch',
       });
     }, 1000);
   }
 
+  componentWillUnmount(): void {
+    clearInterval(interval);
+  }
   handleStandardTableChange = (
     pagination: Partial<TableListPagination>,
     filtersArg: Record<keyof TableListItem, string[]>,

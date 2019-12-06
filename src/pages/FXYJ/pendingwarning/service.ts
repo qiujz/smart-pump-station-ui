@@ -3,13 +3,13 @@ import { TableListParams } from './data.d';
 import Constants from '@/utils/Constants';
 
 export async function queryRule(params: TableListParams) {
-  return request(Constants.baseUrl + '/api/warning/allPWLog', {
+  return request(Constants.baseUrl + '/warning/allPWLog', {
     params,
   });
 }
 
 export async function removeRule(params: TableListParams) {
-  return request('/api/rule', {
+  return request(Constants.baseUrl + '/rule', {
     method: 'POST',
     data: {
       ...params,
@@ -19,7 +19,7 @@ export async function removeRule(params: TableListParams) {
 }
 
 export async function addRule(params: TableListParams) {
-  return request('/api/rule', {
+  return request(Constants.baseUrl + '/rule', {
     method: 'POST',
     data: {
       ...params,
@@ -29,7 +29,7 @@ export async function addRule(params: TableListParams) {
 }
 
 export async function updateRule(params: TableListParams) {
-  return request('/api/rule', {
+  return request(Constants.baseUrl + '/rule', {
     method: 'POST',
     data: {
       ...params,
