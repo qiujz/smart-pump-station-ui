@@ -7,6 +7,7 @@ import {
   Marker,
   Label,
   Ground,
+  CustomControl as Custom
 
 } from 'rc-bmap';
 import styles from './index.less';
@@ -17,11 +18,12 @@ import {StateType} from "@/pages/GIS/JCDT/model";
 import {connect} from "dva";
 import {Component} from "react";
 import React from 'react';
+import {TableListItem} from "@/pages/GIS/JCDT/data";
 
 
 const { Content } = Label;
 const {Point, Path, Size, Events, Bounds} = Base;
-const {MAP_TYPE} = Constants;
+const {MAP_TYPE, CONTROL_ANCHOR} = Constants;
 
 // const polylinePoints = [
 //   { lng: 120.08871, lat: 31.65547 },
@@ -48,6 +50,31 @@ const polygonPoints = [
   { lng: 120.09005, lat: 31.649721 },
   { lng: 120.087526, lat: 31.650067 },
 ];
+
+
+//
+// @Custom
+// class CustomControl extends Component {
+//
+//   render() {
+//     return (
+//       <div>
+//       <Button
+//
+//         onClick={PumpMap.prototype.handleClick}
+//       >
+//         开启工程图
+//       </Button>
+//       <Button
+//
+//     onClick={PumpMap.prototype.handleDbClick}
+//       >
+//       关闭工程图
+//       </Button>
+//       </div>
+//         );
+//   }
+// }
 
 
 interface TableListProps {
@@ -335,14 +362,10 @@ class PumpMap extends Component <TableListProps, TableListState> {
       isShow,
       tableVisible,
     } = this.state;
-
     return (
 
       <PageHeaderWrapper>
       <div className={styles.main}>
-
-        <Button onClick={this.handleDbClick}>开启工程图</Button>
-        <Button onClick={this.handleClick}>关闭工程图</Button>
 
         <Map
           ak="R6nej5fILtmiQ2BUh6EfRmy3"
@@ -354,6 +377,8 @@ class PumpMap extends Component <TableListProps, TableListState> {
           {/*  click={this.handleClick}*/}
           {/*  dblclick={this.handleDbClick}*/}
           {/*/>*/}
+          <Button onClick={this.handleDbClick}>开启工程图</Button>
+          <Button onClick={this.handleClick}>关闭工程图</Button>
           <Point name="center" lng="120.0918750000" lat="31.6560620000"/>
 
           {isShow && <Ground
@@ -479,7 +504,9 @@ class PumpMap extends Component <TableListProps, TableListState> {
             <p>{this.state.drawerContent}</p>
             {tableVisible &&
             <Table
-                dataSource={data.list}
+                dataSource={data.list.sort((a: TableListItem, b: TableListItem) => {
+                  return a.key - b.key;
+                })}
                 columns={this.columns1}
                 pagination={false}
             />
@@ -510,6 +537,12 @@ class PumpMap extends Component <TableListProps, TableListState> {
           </Label>
 
 
+          {/*<Custom*/}
+          {/*  visible={true}*/}
+          {/*  anchor={CONTROL_ANCHOR.TOP_LEFT}*/}
+          {/*>*/}
+          {/*  <Size name="offset" width="10" height="20" />*/}
+          {/*</Custom>*/}
         </Map>
 
       </div>
