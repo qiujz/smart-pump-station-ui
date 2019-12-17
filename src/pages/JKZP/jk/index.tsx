@@ -1,10 +1,15 @@
 import {PageHeaderWrapper} from '@ant-design/pro-layout';
 import React from 'react';
 import {Button, Card, Col, Divider, Row} from 'antd';
-//import request from '@/utils/request';
+import request from '@/utils/request';
+import Constants from '@/utils/Constants';
 
 export default () => {
-  let AccessToken = 'at.58ava0zrd6cu4c3m014osord0oq2hu45-4g2j8vgtvc-1vdhk66-7xsi78nic';
+  // let AccessToken = 'at.con2lhmv6jm3hp366jxd77tl6fwbblit-51c78joybk-0m64vb6-pdseb3gwb';
+  let AccessToken = '';
+  request(Constants.baseUrl + '/camera/token').then(function (data) {
+    AccessToken = data;
+  });
   let autoplay = 0;
   let arr: Array<string> = [
     'D54877405',

@@ -1,29 +1,17 @@
-
-import {
-  Map,
-  Polygon,
-  Base,
-  Constants,
-  Marker,
-  Label,
-  Ground,
-  CustomControl as Custom
-
-} from 'rc-bmap';
+import {Map, Polygon, Base, Constants, Marker, Label, Ground} from 'rc-bmap';
 import styles from './index.less';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
-import {Drawer, Table, Button,} from "antd";
-import {Dispatch} from "redux";
-import {StateType} from "@/pages/GIS/JCDT/model";
-import {connect} from "dva";
-import {Component} from "react";
+import {Drawer, Table, Button} from 'antd';
+import {Dispatch} from 'redux';
+import {StateType} from '@/pages/GIS/JCDT/model';
+import {connect} from 'dva';
+import {Component} from 'react';
 import React from 'react';
-import {TableListItem} from "@/pages/GIS/JCDT/data";
-
+import {TableListItem} from '@/pages/GIS/JCDT/data';
 
 const { Content } = Label;
 const {Point, Path, Size, Events, Bounds} = Base;
-const {MAP_TYPE, CONTROL_ANCHOR} = Constants;
+const {MAP_TYPE} = Constants;
 
 // const polylinePoints = [
 //   { lng: 120.08871, lat: 31.65547 },
@@ -51,7 +39,6 @@ const polygonPoints = [
   { lng: 120.087526, lat: 31.650067 },
 ];
 
-
 //
 // @Custom
 // class CustomControl extends Component {
@@ -76,12 +63,10 @@ const polygonPoints = [
 //   }
 // }
 
-
 interface TableListProps {
   dispatch: Dispatch<any>;
   loading: boolean;
   listTableListDt: StateType;
-
 }
 
 interface TableListState {
@@ -110,21 +95,16 @@ interface TableListState {
     loading: loading.models.rule,
   }),
 )
-
-class PumpMap extends Component <TableListProps, TableListState> {
-
+class PumpMap extends Component<TableListProps, TableListState> {
   state: TableListState = {
     drawerVisible: false,
     drawerTitle: '',
     drawerContent: '',
     isShow: false,
     tableVisible: true,
-  }
-
-
+  };
 
   columns1 = [
-
     {
       title: '设备名称',
       dataIndex: 'name',
@@ -134,20 +114,17 @@ class PumpMap extends Component <TableListProps, TableListState> {
       dataIndex: 'description',
     },
     {
-
       title: '数值',
       dataIndex: 'value',
     },
     {
-
       title: '备注',
       dataIndex: 'comments',
     },
     {
       title: '上报时间',
-      dataIndex: 'date'
-    }
-
+      dataIndex: 'date',
+    },
   ];
   //
   // MP(ak: string) {
@@ -172,12 +149,9 @@ class PumpMap extends Component <TableListProps, TableListState> {
   //   map.enableScrollWheelZoom(true); //开启鼠标滚轮缩放
   // }
 
-
   componentWillUnmount(): void {
     clearInterval(interval);
   }
-
-
 
   showDrawer = (content: string) => {
     // let data1={
@@ -192,19 +166,18 @@ class PumpMap extends Component <TableListProps, TableListState> {
     const {dispatch} = this.props;
     let code: any = [];
     switch (content) {
-
-      case "镇北排涝站":
-        this.state.drawerTitle = "镇北排涝站";
-        this.state.drawerContent = "分割内外河水位。暂未接入平台";
+      case '镇北排涝站':
+        this.state.drawerTitle = '镇北排涝站';
+        this.state.drawerContent = '分割内外河水位。暂未接入平台';
         clearInterval(interval);
         this.setState({
           tableVisible: false,
         });
         break;
-      case "截留泵站-泵站内":
-        this.state.drawerTitle = "截留泵站-泵站内";
-        this.state.drawerContent = "设备面板+2个监控面板，设备面板显示两个泵的运行状态";
-        code = ["0000103", "0000108", "0000135", "0000136", "0000146", "0000147"];
+      case '截留泵站-泵站内':
+        this.state.drawerTitle = '截留泵站-泵站内';
+        this.state.drawerContent = '设备面板+2个监控面板，设备面板显示两个泵的运行状态';
+        code = ['0000103', '0000108', '0000135', '0000136', '0000146', '0000147'];
         //let code1=JSON.stringify(code);
         // let i=0;
         // for(let ldt in this.props.listTableListDt.data.list){
@@ -231,18 +204,19 @@ class PumpMap extends Component <TableListProps, TableListState> {
           tableVisible: true,
         });
         break;
-      case "截留泵站-河岸边":
-        this.state.drawerTitle = "截留泵站-河岸边";
-        this.state.drawerContent = "监控面板";
+      case '截留泵站-河岸边':
+        this.state.drawerTitle = '截留泵站-河岸边';
+        this.state.drawerContent = '监控面板';
         clearInterval(interval);
         this.setState({
           tableVisible: false,
         });
         break;
-      case "截留泵站-西闸":
-        this.state.drawerTitle = "截留泵站-西闸";
-        this.state.drawerContent = "设备面板+监控面板，设备面板显示闸门的开关状态（通过启闭机的开关信号确定）";
-        code = ["0000160", "0000161"];
+      case '截留泵站-西闸':
+        this.state.drawerTitle = '截留泵站-西闸';
+        this.state.drawerContent =
+          '设备面板+监控面板，设备面板显示闸门的开关状态（通过启闭机的开关信号确定）';
+        code = ['0000160', '0000161'];
         interval = setInterval(() => {
           dispatch({
             type: 'listTableListDt/latestByCodeArray',
@@ -253,10 +227,11 @@ class PumpMap extends Component <TableListProps, TableListState> {
           tableVisible: true,
         });
         break;
-      case "截留泵站-东闸":
-        this.state.drawerTitle = "截留泵站-东闸";
-        this.state.drawerContent = "设备面板+监控面板，设备面板显示闸门的开关状态（通过启闭机的开关信号确定）";
-        code = ["0000173", "0000174"];
+      case '截留泵站-东闸':
+        this.state.drawerTitle = '截留泵站-东闸';
+        this.state.drawerContent =
+          '设备面板+监控面板，设备面板显示闸门的开关状态（通过启闭机的开关信号确定）';
+        code = ['0000173', '0000174'];
         interval = setInterval(() => {
           dispatch({
             type: 'listTableListDt/latestByCodeArray',
@@ -267,18 +242,18 @@ class PumpMap extends Component <TableListProps, TableListState> {
           tableVisible: true,
         });
         break;
-      case "循环水泵站-人工湿地旁":
-        this.state.drawerTitle = "循环水泵站-人工湿地旁";
-        this.state.drawerContent = "监控面板";
+      case '循环水泵站-人工湿地旁':
+        this.state.drawerTitle = '循环水泵站-人工湿地旁';
+        this.state.drawerContent = '监控面板';
         clearInterval(interval);
         this.setState({
           tableVisible: false,
         });
         break;
-      case "循环水泵站-泵站内":
-        this.state.drawerTitle = "循环水泵站-泵站内";
-        this.state.drawerContent = "设备面板+监控面板，设备面板显示两个泵的运行状态";
-        code = ["0000005", "0000010"];
+      case '循环水泵站-泵站内':
+        this.state.drawerTitle = '循环水泵站-泵站内';
+        this.state.drawerContent = '设备面板+监控面板，设备面板显示两个泵的运行状态';
+        code = ['0000005', '0000010'];
         interval = setInterval(() => {
           dispatch({
             type: 'listTableListDt/latestByCodeArray',
@@ -289,23 +264,22 @@ class PumpMap extends Component <TableListProps, TableListState> {
           tableVisible: true,
         });
         break;
-      case "循环水泵站-河岸取水口":
-        this.state.drawerTitle = "循环水泵站-河岸取水口";
-        this.state.drawerContent = "监控面板";
+      case '循环水泵站-河岸取水口':
+        this.state.drawerTitle = '循环水泵站-河岸取水口';
+        this.state.drawerContent = '监控面板';
         clearInterval(interval);
         this.setState({
           tableVisible: false,
         });
         break;
-      case "洛阳二号泵站":
-        this.state.drawerTitle = "洛阳二号泵站";
-        this.state.drawerContent = "提升泵站。暂未接入平台";
+      case '洛阳二号泵站':
+        this.state.drawerTitle = '洛阳二号泵站';
+        this.state.drawerContent = '提升泵站。暂未接入平台';
         clearInterval(interval);
         this.setState({
           tableVisible: false,
         });
         break;
-
     }
     this.setState({
       drawerVisible: true,
@@ -322,14 +296,14 @@ class PumpMap extends Component <TableListProps, TableListState> {
     //  console.log('click');
 
     this.setState({isShow: false});
-  }
+  };
   handleDbClick = () => {
     // console.log('dbclick');
 
     this.setState({
-      isShow: true
+      isShow: true,
     });
-  }
+  };
   //
   // render(){
   //
@@ -341,7 +315,6 @@ class PumpMap extends Component <TableListProps, TableListState> {
   //     </div>
   //   )
   // }
-
 
   // render(){
   //   const { pos } = this.state;
@@ -358,194 +331,191 @@ class PumpMap extends Component <TableListProps, TableListState> {
     const {
       listTableListDt: {data},
     } = this.props;
-    let {
-      isShow,
-      tableVisible,
-    } = this.state;
+    let {isShow, tableVisible} = this.state;
     return (
-
       <PageHeaderWrapper>
-      <div className={styles.main}>
-
-        <Map
-          ak="R6nej5fILtmiQ2BUh6EfRmy3"
-          zoom={19}
-          scrollWheelZoom
-          mapType={MAP_TYPE.SATELLITE}
-        >
-          {/*<Events*/}
-          {/*  click={this.handleClick}*/}
-          {/*  dblclick={this.handleDbClick}*/}
-          {/*/>*/}
-          <Button onClick={this.handleDbClick}>开启工程图</Button>
-          <Button onClick={this.handleClick}>关闭工程图</Button>
-          <Point name="center" lng="120.0918750000" lat="31.6560620000"/>
-
-          {isShow && <Ground
-              imageURL="http://img.pump.xliyun.com/1.png"
-              opacity={isShow}
-              displayOnMinLevel={10}
-              displayOnMaxLevel={19}
+        <div className={styles.main}>
+          <Map
+            ak="R6nej5fILtmiQ2BUh6EfRmy3"
+            zoom={19}
+            scrollWheelZoom
+            mapType={MAP_TYPE.SATELLITE}
+            autoSize
           >
-              <Bounds>
-                  <Point name="sw" lng={120.0888680000} lat={31.654437}/>
+            {/*<Events*/}
+            {/*  click={this.handleClick}*/}
+            {/*  dblclick={this.handleDbClick}*/}
+            {/*/>*/}
+            <Button onClick={this.handleDbClick} type={'primary'}>
+              开启工程图
+            </Button>
+            <Button onClick={this.handleClick} type={'primary'}>
+              关闭工程图
+            </Button>
+            <Point name="center" lng="120.0918750000" lat="31.6560620000"/>
+
+            {isShow && (
+              <Ground
+                imageURL="http://img.pump.xliyun.com/1.png"
+                opacity={isShow}
+                displayOnMinLevel={10}
+                displayOnMaxLevel={19}
+              >
+                <Bounds>
+                  <Point name="sw" lng={120.088868} lat={31.654437}/>
                   <Point name="ne" lng={120.095105} lat={31.657585}/>
-              </Bounds>
+                </Bounds>
+              </Ground>
+            )}
 
-          </Ground>
+            {/*<Polyline strokeColor="#B3D8FF" strokeWeight={20} strokeOpacity={0.8} editing={editing}>*/}
+            {/*  <Path>*/}
+            {/*    {polylinePoints.map(item => (*/}
+            {/*      <Point lng={item.lng} lat={item.lat} />*/}
+            {/*    ))}*/}
+            {/*  </Path>*/}
+            {/*</Polyline>*/}
+            <Polygon
+              strokeColor="black"
+              strokeWeight={5}
+              strokeOpacity={0.8}
+              editing={false}
+              fillColor={0}
+              strokeStyle={'dashed'}
+            >
+              <Path>
+                {polygonPoints.map(item => (
+                  <Point lng={item.lng} lat={item.lat}/>
+                ))}
+              </Path>
+            </Polygon>
+            {/*<MapType mapTypes={[MAP_TYPE.NORMAL, MAP_TYPE.SATELLITE]} />*/}
 
-          }
+            <Marker>
+              <Point lng="120.0892470000" lat="31.6554480000"/>
+              <Label>
+                <Size name="offset" width="20" height="-5"/>
+                <Content>镇北排涝站</Content>
+              </Label>
+              <Events click={() => this.showDrawer('镇北排涝站')}/>
+            </Marker>
+            <Marker>
+              <Point lng="120.0900610000" lat=" 31.6550520000"/>
+              <Label>
+                <Size name="offset" width="10" height="20"/>
+                <Content>截留泵站-泵站内</Content>
+              </Label>
+              <Events click={() => this.showDrawer('截留泵站-泵站内')}/>
+            </Marker>
+            <Marker>
+              <Point lng="120.0900870000" lat="  31.6551250000"/>
+              <Label>
+                <Size name="offset" width="20" height="-5"/>
+                <Content>截留泵站-河岸边</Content>
+              </Label>
+              <Events click={() => this.showDrawer('截留泵站-河岸边')}/>
+            </Marker>
+            <Marker>
+              <Point lng="120.0895650000" lat=" 31.6551250000"/>
+              <Label>
+                <Size name="offset" width="20" height="-5"/>
+                <Content>截留泵站-西闸</Content>
+              </Label>
+              <Events click={() => this.showDrawer('截留泵站-西闸')}/>
+            </Marker>
+            <Marker>
+              <Point lng="120.0919820000" lat=" 31.6549180000"/>
+              <Label>
+                <Size name="offset" width="20" height="-5"/>
+                <Content>截留泵站-东闸</Content>
+              </Label>
+              <Events click={() => this.showDrawer('截留泵站-东闸')}/>
+            </Marker>
+            <Marker>
+              <Point lng="120.0890400000" lat="31.6556820000"/>
+              <Label>
+                <Size name="offset" width="0" height="-25"/>
+                <Content>循环水泵站-人工湿地旁</Content>
+              </Label>
+              <Events click={() => this.showDrawer('循环水泵站-人工湿地旁')}/>
+            </Marker>
+            <Marker>
+              <Point lng="120.0947660000" lat="31.6557090000"/>
+              <Label>
+                <Size name="offset" width="20" height="-5"/>
+                <Content>循环水泵站-泵站内</Content>
+              </Label>
+              <Events click={() => this.showDrawer('循环水泵站-泵站内')}/>
+            </Marker>
 
-          {/*<Polyline strokeColor="#B3D8FF" strokeWeight={20} strokeOpacity={0.8} editing={editing}>*/}
-          {/*  <Path>*/}
-          {/*    {polylinePoints.map(item => (*/}
-          {/*      <Point lng={item.lng} lat={item.lat} />*/}
-          {/*    ))}*/}
-          {/*  </Path>*/}
-          {/*</Polyline>*/}
-          <Polygon
-            strokeColor="black"
-            strokeWeight={5}
-            strokeOpacity={0.8}
-            editing={false}
-            fillColor={0}
-            strokeStyle={'dashed'}
-          >
-            <Path>
-              {polygonPoints.map(item => (
-                <Point lng={item.lng} lat={item.lat}/>
-              ))}
-            </Path>
-          </Polygon>
-          {/*<MapType mapTypes={[MAP_TYPE.NORMAL, MAP_TYPE.SATELLITE]} />*/}
+            <Marker>
+              <Point lng="120.0947980000" lat="31.6558210000"/>
+              <Label>
+                <Size name="offset" width="20" height="-10"/>
+                <Content>循环水泵站-河岸取水口</Content>
+                <Events click={() => this.showDrawer('循环水泵站-河岸取水口')}/>
+              </Label>
+            </Marker>
 
-          <Marker>
-            <Point lng="120.0892470000" lat="31.6554480000"/>
+            <Marker>
+              <Point lng="120.0895290000" lat="31.6556590000"/>
+              <Label>
+                <Size name="offset" width="20" height="0"/>
+                <Content>洛阳二号泵站</Content>
+              </Label>
+              <Events click={() => this.showDrawer('洛阳二号泵站')}/>
+            </Marker>
+
+            <Drawer
+              title={this.state.drawerTitle}
+              placement="top"
+              closable={true}
+              onClose={this.onClose}
+              visible={this.state.drawerVisible}
+            >
+              <p>{this.state.drawerContent}</p>
+              {tableVisible && (
+                <Table
+                  dataSource={data.list.sort((a: TableListItem, b: TableListItem) => {
+                    return a.key - b.key;
+                  })}
+                  columns={this.columns1}
+                  pagination={false}
+                />
+              )}
+            </Drawer>
+
             <Label>
-              <Size name="offset" width="20" height="-5"/>
-              <Content>镇北排涝站</Content>
+              <Point name="position" lng="120.089475" lat="31.655373"/>
+              <Size name="offset" width="550" height="10"/>
+              <Content>徐家头浜</Content>
             </Label>
-            <Events click={() => this.showDrawer("镇北排涝站")}/>
-          </Marker>
-          <Marker>
-            <Point lng="120.0900610000" lat=" 31.6550520000"/>
             <Label>
-              <Size name="offset" width="10" height="20"/>
-              <Content>截留泵站-泵站内</Content>
+              <Point name="position" lng="120.095233" lat="31.655227"/>
+              <Size name="offset" width="10" height="60"/>
+              <Content>
+                阳<br/>光<br/>路<br/>
+              </Content>
             </Label>
-            <Events click={() => this.showDrawer("截留泵站-泵站内")}/>
-          </Marker>
-          <Marker>
-            <Point lng="120.0900870000" lat="  31.6551250000"/>
             <Label>
-              <Size name="offset" width="20" height="-5"/>
-              <Content>截留泵站-河岸边</Content>
+              <Point name="position" lng="120.089825" lat="31.654367"/>
+              <Size name="offset" width="100" height="10"/>
+              <Content>新科路</Content>
             </Label>
-            <Events click={() => this.showDrawer("截留泵站-河岸边")}/>
-          </Marker>
-          <Marker>
-            <Point lng="120.0895650000" lat=" 31.6551250000"/>
             <Label>
-              <Size name="offset" width="20" height="-5"/>
-              <Content>截留泵站-西闸</Content>
+              <Point name="position" lng="120.093472" lat="31.651861"/>
+              <Size name="offset" width="100" height="10"/>
+              <Content>洛阳中学</Content>
             </Label>
-            <Events click={() => this.showDrawer("截留泵站-西闸")}/>
-          </Marker>
-          <Marker>
-            <Point lng="120.0919820000" lat=" 31.6549180000"/>
-            <Label>
-              <Size name="offset" width="20" height="-5"/>
-              <Content>截留泵站-东闸</Content>
-            </Label>
-            <Events click={() => this.showDrawer("截留泵站-东闸")}/>
-          </Marker>
-          <Marker>
-            <Point lng="120.0890400000" lat="31.6556820000"/>
-            <Label>
-              <Size name="offset" width="0" height="-25"/>
-              <Content>循环水泵站-人工湿地旁</Content>
-            </Label>
-            <Events click={() => this.showDrawer("循环水泵站-人工湿地旁")}/>
-          </Marker>
-          <Marker>
-            <Point lng="120.0947660000" lat="31.6557090000"/>
-            <Label>
-              <Size name="offset" width="20" height="-5"/>
-              <Content>循环水泵站-泵站内</Content>
-            </Label>
-            <Events click={() => this.showDrawer("循环水泵站-泵站内")}/>
-          </Marker>
 
-          <Marker>
-            <Point lng="120.0947980000" lat="31.6558210000"/>
-            <Label>
-              <Size name="offset" width="20" height="-10"/>
-              <Content>循环水泵站-河岸取水口</Content>
-              <Events click={() => this.showDrawer("循环水泵站-河岸取水口")}/>
-            </Label>
-          </Marker>
-
-          <Marker>
-            <Point lng="120.0895290000" lat="31.6556590000"/>
-            <Label>
-              <Size name="offset" width="20" height="0"/>
-              <Content>洛阳二号泵站</Content>
-            </Label>
-            <Events click={() => this.showDrawer("洛阳二号泵站")}/>
-          </Marker>
-
-          <Drawer
-            title={this.state.drawerTitle}
-            placement="top"
-            closable={true}
-            onClose={this.onClose}
-            visible={this.state.drawerVisible}
-          >
-            <p>{this.state.drawerContent}</p>
-            {tableVisible &&
-            <Table
-                dataSource={data.list.sort((a: TableListItem, b: TableListItem) => {
-                  return a.key - b.key;
-                })}
-                columns={this.columns1}
-                pagination={false}
-            />
-            }
-          </Drawer>
-
-          <Label>
-            <Point name="position" lng="120.089475" lat="31.655373"/>
-            <Size name="offset" width="550" height="10"/>
-            <Content>徐家头浜</Content>
-          </Label>
-          <Label>
-            <Point name="position" lng="120.095233" lat="31.655227"/>
-            <Size name="offset" width="10" height="60"/>
-            <Content>
-              阳<br/>光<br/>路<br/>
-            </Content>
-          </Label>
-          <Label>
-            <Point name="position" lng="120.089825" lat="31.654367"/>
-            <Size name="offset" width="100" height="10"/>
-            <Content>新科路</Content>
-          </Label>
-          <Label>
-            <Point name="position" lng="120.093472" lat="31.651861"/>
-            <Size name="offset" width="100" height="10"/>
-            <Content>洛阳中学</Content>
-          </Label>
-
-
-          {/*<Custom*/}
-          {/*  visible={true}*/}
-          {/*  anchor={CONTROL_ANCHOR.TOP_LEFT}*/}
-          {/*>*/}
-          {/*  <Size name="offset" width="10" height="20" />*/}
-          {/*</Custom>*/}
-        </Map>
-
-      </div>
+            {/*<Custom*/}
+            {/*  visible={true}*/}
+            {/*  anchor={CONTROL_ANCHOR.TOP_LEFT}*/}
+            {/*>*/}
+            {/*  <Size name="offset" width="10" height="20" />*/}
+            {/*</Custom>*/}
+          </Map>
+        </div>
       </PageHeaderWrapper>
     );
   }
