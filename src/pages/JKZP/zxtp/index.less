@@ -4,3 +4,26 @@
   width: 100%;
   background: @component-background;
 }
+
+.pic {
+  position: fixed;
+  z-index: 19;
+  max-height: calc(100vh - 16px);
+  overflow-x: hidden;
+  overflow-y: auto;
+  background: #fff;
+}
+
+.pic2 {
+  position: absolute;
+  top: 18px;
+  right: 240px;
+}
+
+.container {
+  :global {
+    .code-box-demo .ant-affix {
+      z-index: 11;
+    }
+  }
+}

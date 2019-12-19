@@ -150,7 +150,7 @@ class PumpMap extends Component<TableListProps, TableListState> {
   // }
 
   componentWillUnmount(): void {
-    clearInterval(interval);
+    clearInterval(interval)
   }
 
   showDrawer = (content: string) => {
