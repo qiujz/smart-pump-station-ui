@@ -2,9 +2,12 @@ import request from '@/utils/request';
 import { TableListParams } from './data.d';
 import Constants from '@/utils/Constants';
 
-export async function queryRule(params: TableListParams) {
-  return request(Constants.baseUrl + '/warning/allWOLog', {
-    params,
+export async function queryRule(params: any) {
+  return request(Constants.baseUrl + '/warning/allPageWOLog', {
+    method: 'POST',
+    data: {
+      ...params,
+    },
   });
 }
 

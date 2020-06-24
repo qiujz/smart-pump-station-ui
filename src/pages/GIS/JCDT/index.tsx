@@ -356,7 +356,7 @@ class PumpMap extends Component<TableListProps, TableListState> {
 
             {isShow && (
               <Ground
-                imageURL="http://img.pump.xliyun.com/1.png"
+                imageURL="https://img.pump.xliyun.com/1.png"
                 opacity={isShow}
                 displayOnMinLevel={10}
                 displayOnMaxLevel={19}

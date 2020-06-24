@@ -172,16 +172,21 @@ class TableList extends Component<TableListProps, TableListState> {
   ];
 
   componentDidMount() {
-    const { dispatch } = this.props;
-    interval = setInterval(() => {
-      dispatch({
-        type: 'listTableListOperateWarningLog/fetch',
-      });
-    }, 1000);
+    const {dispatch} = this.props;
+    const params: Partial<TableListParams> = {
+      currentPage: 0,
+      pageSize: 50,
+
+    };
+    dispatch({
+      type: 'listTableListOperateWarningLog/fetch',
+      payload: params,
+    });
+
   }
 
   componentWillUnmount(): void {
-    clearInterval(interval);
+
   }
   handleStandardTableChange = (
     pagination: Partial<TableListPagination>,
@@ -198,7 +203,7 @@ class TableList extends Component<TableListProps, TableListState> {
     }, {});
 
     const params: Partial<TableListParams> = {
-      currentPage: pagination.current,
+      currentPage: pagination.current - 1,
       pageSize: pagination.pageSize,
       ...formValues,
       ...filters,
@@ -208,7 +213,7 @@ class TableList extends Component<TableListProps, TableListState> {
     }
 
     dispatch({
-      type: 'listTableList/fetch',
+      type: 'listTableListOperateWarningLog/fetch',
       payload: params,
     });
   };
@@ -471,22 +476,22 @@ class TableList extends Component<TableListProps, TableListState> {
       <PageHeaderWrapper>
         <Card bordered={false}>
           <div className={styles.tableList}>
-            <div className={styles.tableListForm}>{this.renderForm()}</div>
-            <div className={styles.tableListOperator}>
-              <Button icon="plus" type="primary" onClick={() => this.handleModalVisible(true)}>
-                新建
-              </Button>
-              {selectedRows.length > 0 && (
-                <span>
-                  <Button>批量操作</Button>
-                  <Dropdown overlay={menu}>
-                    <Button>
-                      更多操作 <Icon type="down" />
-                    </Button>
-                  </Dropdown>
-                </span>
-              )}
-            </div>
+            {/*<div className={styles.tableListForm}>{this.renderForm()}</div>*/}
+            {/*<div className={styles.tableListOperator}>*/}
+            {/*  <Button icon="plus" type="primary" onClick={() => this.handleModalVisible(true)}>*/}
+            {/*    新建*/}
+            {/*  </Button>*/}
+            {/*  {selectedRows.length > 0 && (*/}
+            {/*    <span>*/}
+            {/*      <Button>批量操作</Button>*/}
+            {/*      <Dropdown overlay={menu}>*/}
+            {/*        <Button>*/}
+            {/*          更多操作 <Icon type="down" />*/}
+            {/*        </Button>*/}
+            {/*      </Dropdown>*/}
+            {/*    </span>*/}
+            {/*  )}*/}
+            {/*</div>*/}
             <StandardTable
               selectedRows={selectedRows}
               loading={loading}

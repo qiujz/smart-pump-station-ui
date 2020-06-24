@@ -1,15 +1,14 @@
-import { IConfig, IPlugin } from 'umi-types';
+import {IConfig, IPlugin} from 'umi-types';
 import defaultSettings from './defaultSettings'; // https://umijs.org/config/
+
 import slash from 'slash2';
 import themePluginConfig from './themePluginConfig';
 
-const {pwa} = defaultSettings;
-
-// preview.pro.ant.design only do not use in your production ;
+const {pwa} = defaultSettings; // preview.pro.ant.design only do not use in your production ;
 // preview.pro.ant.design 专用环境变量，请不要在你的项目中使用它。
-const { ANT_DESIGN_PRO_ONLY_DO_NOT_USE_IN_YOUR_PRODUCTION } = process.env;
-const isAntDesignProPreview = ANT_DESIGN_PRO_ONLY_DO_NOT_USE_IN_YOUR_PRODUCTION === 'site';
 
+const {ANT_DESIGN_PRO_ONLY_DO_NOT_USE_IN_YOUR_PRODUCTION} = process.env;
+const isAntDesignProPreview = ANT_DESIGN_PRO_ONLY_DO_NOT_USE_IN_YOUR_PRODUCTION === 'site';
 const plugins: IPlugin[] = [
   [
     'umi-plugin-react',
@@ -128,11 +127,31 @@ export default {
               component: './Welcome',
               authority: ['admin'],
             },
+
+            // {
+            //   name: '水量报表',
+            //   icon: 'smile',
+            //   path: '/dpzb',
+            //   // component: './DPZB', //  authority: ['admin'],
+            //   routes: [
+            //     {
+            //       name: '站点水量',
+            //       icon: 'smile',
+            //       path: '/dpzb/wateranalysis',
+            //       component: './DPZB/wateranalysis',
+            //     },
+            //     {
+            //       name: '水量报表',
+            //       icon: 'smile',
+            //       path: '/dpzb/watereport',
+            //       component: './DPZB/watereport',
+            //     },
+            //   ],
+            // },
             {
               name: 'GIS监测',
               icon: 'smile',
               path: '/gis',
-
               //component: './GIS',
               authority: ['admin'],
               routes: [
@@ -156,10 +175,9 @@ export default {
               path: '/yckz',
               //component: './YCKZ',
               authority: ['admin'],
-
               routes: [
                 {
-                  name: '操作详情',
+                  name: '操作历史记录',
                   icon: 'smile',
                   path: '/yckz/czxq',
                   component: './YCKZ/czxq',
@@ -210,8 +228,17 @@ export default {
               name: '监测分析',
               icon: 'smile',
               path: '/jcfx',
-              component: './JCFX',
+              //component: './JCFX',
               authority: ['admin'],
+              routes: [
+                {
+                  name: '水量报告',
+                  icon: 'smile',
+                  path: '/jcfx/watereport',
+                  component: './JCFX/watereport',
+                },
+
+              ],
             },
           ],
         },
@@ -220,7 +247,6 @@ export default {
         },
       ],
     },
-
     {
       component: './404',
     },
@@ -285,5 +311,4 @@ export default {
     //   pathRewrite: {'^/api': ''},
     // },
   },
-
 } as IConfig;

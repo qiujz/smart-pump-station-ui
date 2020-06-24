@@ -107,10 +107,11 @@ class StandardTable extends Component<StandardTableProps<TableListItem>, Standar
 
     const paginationProps = pagination
       ? {
-          showSizeChanger: true,
-          showQuickJumper: true,
-          ...pagination,
-        }
+        showSizeChanger: true,
+        showQuickJumper: true,
+        pageSizeOptions: ['10', '50', '100', '200'],
+        ...pagination,
+      }
       : false;
 
     const rowSelection: TableRowSelection<TableListItem> = {

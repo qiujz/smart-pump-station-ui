@@ -16,7 +16,7 @@ declare module 'react-fittext';
 declare module '@antv/data-set';
 declare module 'nzh/cn';
 declare module 'rc-bmap';
-
+declare module 'numeral';
 // google analytics interface
 interface GAFieldsObject {
   eventCategory: string;

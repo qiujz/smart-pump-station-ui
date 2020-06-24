@@ -8,12 +8,12 @@ export async function queryRule(params: TableListParams) {
   });
 }
 
-export async function removeRule(params: TableListParams) {
-  return request(Constants.baseUrl + '/rule', {
+export async function removeRule(params: any) {
+  return request(Constants.baseUrl + '/warning/deletePWLog', {
     method: 'POST',
     data: {
       ...params,
-      method: 'delete',
+      method: 'post',
     },
   });
 }

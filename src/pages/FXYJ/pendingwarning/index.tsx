@@ -14,6 +14,7 @@ import {
   Row,
   Select,
   message,
+  Modal,
 } from 'antd';
 import React, { Component, Fragment } from 'react';
 
@@ -31,13 +32,14 @@ import { TableListItem, TableListPagination, TableListParams } from './data.d';
 
 import styles from './style.less';
 
+
 const FormItem = Form.Item;
 const { Option } = Select;
 const getValue = (obj: { [x: string]: string[] }) =>
   Object.keys(obj)
     .map(key => obj[key])
     .join(',');
-
+const {TextArea} = Input;
 type IStatusMapType = 'default' | 'processing' | 'success' | 'error';
 const statusMap = ['default', 'processing', 'success', 'error'];
 const status = ['关闭', '运行中', '已上线', '异常'];
@@ -49,12 +51,13 @@ interface TableListProps extends FormComponentProps {
 }
 
 interface TableListState {
-  modalVisible: boolean;
+  modalVisible1: boolean;
   updateModalVisible: boolean;
   expandForm: boolean;
   selectedRows: TableListItem[];
   formValues: { [key: string]: string };
   stepFormValues: Partial<TableListItem>;
+  operation: string;
 }
 
 /* eslint react/no-multi-comp:0 */
@@ -76,12 +79,13 @@ interface TableListState {
 )
 class TableList extends Component<TableListProps, TableListState> {
   state: TableListState = {
-    modalVisible: false,
+    modalVisible1: false,
     updateModalVisible: false,
     expandForm: false,
     selectedRows: [],
     formValues: {},
     stepFormValues: {},
+    operation: '忽略',
   };
 
   columns1: StandardTableColumnProps[] = [
@@ -175,11 +179,27 @@ class TableList extends Component<TableListProps, TableListState> {
       title: '操作',
       render: (text, record) => (
         <Fragment>
-          <Button type={'primary'} onClick={() => this.handelPWLog(record, '处理')}>
+          <Modal
+            visible={this.state.modalVisible1}
+            width={400}
+            bodyStyle={{padding: '32px 40px 48px'}}
+            destroyOnClose
+            title="操作内容"
+            onOk={() => this.handelPWLog(record, '处理')}
+          >
+            <TextArea rows={4} onChange={event => {
+              this.setState({operation: event.target.value})
+            }}/>
+          </Modal>
+          <Button type={'primary'} onClick={() => this.setState({
+            modalVisible1: true,
+          })}>
             处理
           </Button>
-          <Divider type="vertical" />
-          <Button type={'primary'} onClick={() => this.handelPWLog(record, '忽略')}>
+          <Divider type="vertical"/>
+          <Button type={'primary'} onClick={() => {
+            this.handelPWLog(record, '忽略');
+          }}>
             忽略
           </Button>
         </Fragment>
@@ -200,6 +220,7 @@ class TableList extends Component<TableListProps, TableListState> {
     clearInterval(interval);
   }
   handelPWLog = (record: any, method: string) => {
+    this.setState({modalVisible1: false});
     const { dispatch } = this.props;
 
     const params = {
@@ -211,12 +232,12 @@ class TableList extends Component<TableListProps, TableListState> {
       grade: record.grade,
       target: record.target,
       method: method,
-      operation:
-        '用户：admin 在 ' + Date.now().toString() + '执行了*' + method + '*操作\n操作结果：成功',
+      operation: this.state.operation,
+      // '用户：admin 在 ' + new Date(Date.now()).toString() + '执行了*' + method + '*操作\n操作结果：成功',
     };
 
     dispatch({
-      type: 'listTableListOperateWarningLog/remove',
+      type: 'listTableListPendingWarning/remove',
       payload: params,
     });
   };
@@ -509,22 +530,22 @@ class TableList extends Component<TableListProps, TableListState> {
       <PageHeaderWrapper>
         <Card bordered={false}>
           <div className={styles.tableList}>
-            <div className={styles.tableListForm}>{this.renderForm()}</div>
-            <div className={styles.tableListOperator}>
-              <Button icon="plus" type="primary" onClick={() => this.handleModalVisible(true)}>
-                新建
-              </Button>
-              {selectedRows.length > 0 && (
-                <span>
-                  <Button>批量操作</Button>
-                  <Dropdown overlay={menu}>
-                    <Button>
-                      更多操作 <Icon type="down" />
-                    </Button>
-                  </Dropdown>
-                </span>
-              )}
-            </div>
+            {/*<div className={styles.tableListForm}>{this.renderForm()}</div>*/}
+            {/*<div className={styles.tableListOperator}>*/}
+            {/*  <Button icon="plus" type="primary" onClick={() => this.handleModalVisible(true)}>*/}
+            {/*    新建*/}
+            {/*  </Button>*/}
+            {/*  {selectedRows.length > 0 && (*/}
+            {/*    <span>*/}
+            {/*      <Button>批量操作</Button>*/}
+            {/*      <Dropdown overlay={menu}>*/}
+            {/*        <Button>*/}
+            {/*          更多操作 <Icon type="down" />*/}
+            {/*        </Button>*/}
+            {/*      </Dropdown>*/}
+            {/*    </span>*/}
+            {/*  )}*/}
+            {/*</div>*/}
             <StandardTable
               selectedRows={selectedRows}
               loading={loading}

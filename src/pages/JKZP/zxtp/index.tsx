@@ -1,6 +1,6 @@
 import {PageHeaderWrapper} from '@ant-design/pro-layout';
-import React, {useState, useEffect, Component} from 'react';
-import {Anchor, Carousel, Spin} from 'antd';
+import React, {Component} from 'react';
+import {Anchor, Carousel} from 'antd';
 import styles from './index.less';
 import request from "@/utils/request";
 import Constants from "@/utils/Constants"
@@ -27,7 +27,8 @@ class PicLatest extends Component {
 
     return (
       <PageHeaderWrapper className={styles.main}>
-        <div className={styles.pic2}>
+
+      <div className={styles.pic2}>
           {/*    /!*<div aria-hidden="true" style={{width: 110, height: 160}}></div>*!/*/}
           <div className={styles.pic} style={{position: "fixed", top: 76, width: 210, height: 260}}>
             {/*<div>*/}
